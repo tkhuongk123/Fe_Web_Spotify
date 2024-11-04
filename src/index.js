@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import Toast from './components/components/Toast';
 import GlobalStyles from "./components/GlobalStyles";
 import reportWebVitals from './reportWebVitals';
 
@@ -9,6 +10,7 @@ root.render(
   <React.StrictMode>
     <GlobalStyles>
       <App />
+      <Toast />
     </GlobalStyles>
   </React.StrictMode>
 );

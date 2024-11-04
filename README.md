@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+// trangthai
+Nhân viên:
+00: Nhận đơn
+01: Trả đơn
+02: Từ chối
+
+Bếp:
+20: Nhận đơn
+21: Trả đơn
