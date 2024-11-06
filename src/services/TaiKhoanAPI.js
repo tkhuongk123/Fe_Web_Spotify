@@ -12,3 +12,14 @@ export const LoginAPI = async({ tendangnhap, matkhau }) => {
         throw error;
     }
 }
+
+export const layTaiKhoan = async({ id }) => {
+    try {
+        const response = await axios.post(`${api}/taikhoan/layTaiKhoan`, {
+            id
+        });
+        return response.data;
+    } catch(error) {
+        throw error;
+    }
+}

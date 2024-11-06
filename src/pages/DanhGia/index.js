@@ -1,8 +1,9 @@
+import DanhGiaDichVu from "../../components/ChucNang/DanhGiaDichVu"
 
 function DanhGia() {
     return (
         <main className="DanhGia">
-            DanhGia
+            <DanhGiaDichVu />
         </main>
     )
 }

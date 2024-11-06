@@ -29,12 +29,13 @@
     border-bottom: 1px solid #ccc;
 }
 
-.Toolbar_content-subnav>ul>li>a {
+.Toolbar_content-subnav>ul>li {
     display: block;
     padding: 10px;
-    border-radius: 2px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
 }
 
-.Toolbar_content-subnav>ul>li>a:hover {
+.Toolbar_content-subnav>ul>li:hover {
     background-color: #eeeeee;
 }

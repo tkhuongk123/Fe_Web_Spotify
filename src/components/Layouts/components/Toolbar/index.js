@@ -1,73 +1,114 @@
 import { useEffect, useState } from "react";
 import "./Toolbar.css";
-
-const khachHang = (
-  <>
-    <li>
-      <a href="/">Trang chủ</a>
-    </li>
-    <li>
-      <a href="/">Giỏ hàng</a>
-    </li>
-    <li>
-      <a href="/">Đơn hàng</a>
-    </li>
-  </>
-);
-
-const nhanVien = (
-  <>
-    <li>
-      <a href="/">Nhận đơn</a>
-    </li>
-    <li>
-      <a href="/">Trả đơn</a>
-    </li>
-  </>
-);
-
-const quanLy = (
-  <>
-    <li>
-      <a href="/">Lịch sử đơn hàng</a>
-    </li>
-    <li>
-      <a href="/">Thống kê</a>
-    </li>
-    <li>
-      <a href="/">Xem đánh giá</a>
-    </li>
-  </>
-);
-
-const bep = (
-  <>
-    <li>
-      <a href="/">Nhận đơn</a>
-    </li>
-    <li>
-      <a href="/">Trả đơn</a>
-    </li>
-  </>
-);
+import { useNavigate } from "react-router-dom";
 
 function Toolbar() {
   const [dsChucNang, setDsChucNang] = useState("");
   const [tenNguoiDung, setTenNguoiDung] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const nguoidung = JSON.parse(sessionStorage.getItem("nguoidung"));
-    setTenNguoiDung(nguoidung.tennguoidung)
+    setTenNguoiDung(nguoidung.tennguoidung);
     if (nguoidung.idquyen === 0) {
-      setDsChucNang(nhanVien);
+      setDsChucNang(
+        <>
+          <li
+            onClick={() => {
+              navigate("/nhanvien/nhandon");
+            }}
+          >
+            Nhận đơn
+          </li>
+          <li
+            onClick={() => {
+              navigate("/nhanvien/tradon");
+            }}
+          >
+            Trả đơn
+          </li>
+        </>
+      );
     } else if (nguoidung.idquyen === 1) {
-      setDsChucNang(quanLy);
+      setDsChucNang(
+        <>
+          <li
+            onClick={() => {
+              navigate("/quanly/donhang");
+            }}
+          >
+            Lịch sử đơn hàng
+          </li>
+          <li
+            onClick={() => {
+              navigate("/quanly/thongke");
+            }}
+          >
+            Thống kê
+          </li>
+          <li
+            onClick={() => {
+              navigate("/quanly/xemdanhgia");
+            }}
+          >
+            Xem đánh giá
+          </li>
+        </>
+      );
     } else if (nguoidung.idquyen === 2) {
-      setDsChucNang(bep);
+      setDsChucNang(
+        <>
+          <li
+            onClick={() => {
+              navigate("/bep/nhandon");
+            }}
+          >
+            Nhận đơn
+          </li>
+          <li
+            onClick={() => {
+              navigate("/bep/tradon");
+            }}
+          >
+            Trả đơn
+          </li>
+        </>
+      );
     } else if (nguoidung.idquyen === 3) {
-      setDsChucNang(khachHang);
+      setDsChucNang(
+        <>
+          <li
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Trang chủ
+          </li>
+          <li
+            onClick={() => {
+              navigate("/auth/giohang");
+            }}
+          >
+            Giỏ hàng
+          </li>
+          <li
+            onClick={() => {
+              navigate("/donhang");
+            }}
+          >
+            Đơn hàng
+          </li>
+          <li
+            onClick={() => {
+              navigate("/danhgia");
+            }}
+          >
+            Đánh giá
+          </li>
+        </>
+      );
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <nav className="Toolbar">
@@ -79,15 +120,16 @@ function Toolbar() {
         <div className="Toolbar_content-subnav">
           <ul>
             {dsChucNang}
-            <li>
-                <a href="/" onClick={(event) => {
-                    sessionStorage.removeItem('nguoidung')
-                    window.location.reload()
-                }}>
-                    Đăng xuất
-                </a>
+            <li
+              onClick={(event) => {
+                sessionStorage.removeItem("nguoidung");
+                navigate("/");
+                window.location.reload();
+              }}
+            >
+              Đăng xuất
             </li>
-        </ul>
+          </ul>
         </div>
       </div>
     </nav>

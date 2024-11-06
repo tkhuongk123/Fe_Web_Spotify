@@ -2,7 +2,7 @@
 import Login from "../pages/Login";
 
 import TrangChu from "../pages/TrangChu";
-import ThanhToan from "../pages/ThanhToan";
+import GioHang from "../pages/GioHang";
 import DonHang from "../pages/DonHang";
 import DanhGia from "../pages/DanhGia";
 
@@ -23,7 +23,7 @@ import { LoginLayout } from "../components/Layouts";
 const khachHangRoutes = [
     { path: '/', component: TrangChu, },
 
-    { path: '/auth/payment', component: ThanhToan, },
+    { path: '/auth/giohang', component: GioHang, },
     { path: '/donhang', component: DonHang, },
     { path: '/danhgia', component: DanhGia, },
 ]

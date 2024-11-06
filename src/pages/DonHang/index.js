@@ -1,8 +1,9 @@
+import XemDonHang from "../../components/ChucNang/XemDonHang"
 
 function DonHang() {
     return (
         <main className="DonHang">
-            DonHang
+            <XemDonHang />
         </main>
     )
 }

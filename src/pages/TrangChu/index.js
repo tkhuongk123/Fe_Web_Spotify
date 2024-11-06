@@ -1,8 +1,9 @@
+import ChonMon from "../../components/ChucNang/ChonMon";
 
 function TrangChu() {
     return (
         <main className="TrangChu">
-            TrangChu
+            <ChonMon />
         </main>
     )
 }
