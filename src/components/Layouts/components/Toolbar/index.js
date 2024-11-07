@@ -41,17 +41,31 @@ function Toolbar() {
           </li>
           <li
             onClick={() => {
-              navigate("/quanly/thongke");
-            }}
-          >
-            Thống kê
-          </li>
-          <li
-            onClick={() => {
               navigate("/quanly/xemdanhgia");
             }}
           >
             Xem đánh giá
+          </li>
+          <li
+            onClick={() => {
+              navigate("/quanly/taikhoan");
+            }}
+          >
+            Tài khoản
+          </li>
+          <li
+            onClick={() => {
+              navigate("/quanly/sanpham");
+            }}
+          >
+            Sản phẩm
+          </li>
+          <li
+            onClick={() => {
+              navigate("/quanly/loaisanpham");
+            }}
+          >
+            Loại sản phẩm
           </li>
         </>
       );
@@ -122,9 +136,11 @@ function Toolbar() {
             {dsChucNang}
             <li
               onClick={(event) => {
-                sessionStorage.removeItem("nguoidung");
-                navigate("/");
-                window.location.reload();
+                navigate('/')
+                setTimeout(() => {
+                  sessionStorage.removeItem("nguoidung");
+                  window.location.reload();
+                }, 100)
               }}
             >
               Đăng xuất

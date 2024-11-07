@@ -1,8 +1,9 @@
+import XemLichSuDonHang from "../../components/ChucNang/XemLichSuDonHang"
 
 function QL_DonHang() {
     return (
         <main className="QL_DonHang">
-            QL_DonHang
+            <XemLichSuDonHang />
         </main>
     )
 }

@@ -74,6 +74,7 @@ trangthai
 
 Khach hang:
 30: Dat
+31: Dat
 
 // trangthai
 Nhân viên:

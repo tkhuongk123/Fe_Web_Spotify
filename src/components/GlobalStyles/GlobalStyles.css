@@ -51,6 +51,23 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
 .text-white {
   color: #fff!important;
+}
+
+.btn-sua {
+  background-color: #e2df13;
+  padding: 10px;
+  border-radius: var(--border-radius);
+}
+
+.btn-xoa {
+  background-color: #e21313;
+  padding: 10px;
+  border-radius: var(--border-radius);
 }

@@ -6,6 +6,7 @@ import { capNhatDonHang } from "../../../services/DonHangAPI";
 import {NotifyError, NotifySuccess, NotifyWarning} from "../Toast"
 import { useState } from "react";
 import ChiTietDonHang from "./ChiTietDonHang";
+import DanhGiaDon from "./DanhGiaDon"
 
 function DanhSachDonHang(props) {
   const [chiTietDonHang, setChiTietDonHang] = useState('')
@@ -20,6 +21,15 @@ function DanhSachDonHang(props) {
         trangthai: formatTrangThai(item.trangthai),
         tongsanpham: item.tongsanpham,
         tongtien: formatPrice(item.tongtien),
+        chitiet: (
+          <div className="chucNang3">
+            <div className="chucNang3_content" onClick={() => {
+              setChiTietDonHang(<ChiTietDonHang iddonhang={item.id} setChiTietDonHang={setChiTietDonHang}/>)
+            }}>
+              <i className="fa-solid fa-circle-info"></i>
+            </div>
+          </div>
+        ),
         ghichu: item.ghichu,
       };
     });
@@ -44,6 +54,11 @@ function DanhSachDonHang(props) {
         title: "Tổng tiền",
         dataIndex: "tongtien",
         key: "tongtien",
+      },
+      {
+        title: "Chi tiết",
+        dataIndex: "chitiet",
+        key: "chitiet",
       },
       {
         title: "Ghi chú",
@@ -292,6 +307,208 @@ function DanhSachDonHang(props) {
       },
     ];
   }
+  else if(props.option === "31") {
+    dataSource = props.dsDonHang.map((item, index) => {
+      return {
+        key: index,
+        ngay: item.ngay,
+        trangthai: formatTrangThai(item.trangthai),
+        tongsanpham: item.tongsanpham,
+        tongtien: formatPrice(item.tongtien),
+        chitiet: (
+          <div className="chucNang3">
+            <div className="chucNang3_content" onClick={() => {
+              setChiTietDonHang(<ChiTietDonHang iddonhang={item.id} setChiTietDonHang={setChiTietDonHang}/>)
+            }}>
+              <i className="fa-solid fa-circle-info"></i>
+            </div>
+          </div>
+        ),
+        danhgia: (
+          <div className="chucNang3">
+            <div className="chucNang3_content" onClick={() => {
+              setChiTietDonHang(<DanhGiaDon iddonhang={item.id} setChiTietDonHang={setChiTietDonHang} idmanguoidung={props.nguoidung.id}/>)
+            }}>
+              <i className="fa-solid fa-envelope"></i>
+            </div>
+          </div>
+        ),
+        ghichu: item.ghichu,
+      };
+    });
+
+    columns = [
+      {
+        title: "Ngày đặt",
+        dataIndex: "ngay",
+        key: "ngay",
+      },
+      {
+        title: "Trang thái",
+        dataIndex: "trangthai",
+        key: "trangthai",
+      },
+      {
+        title: "Tổng sản phẩm",
+        dataIndex: "tongsanpham",
+        key: "tongsanpham",
+      },
+      {
+        title: "Tổng tiền",
+        dataIndex: "tongtien",
+        key: "tongtien",
+      },
+      {
+        title: "Chi tiết",
+        dataIndex: "chitiet",
+        key: "chitiet",
+      },
+      {
+        title: "Đánh giá",
+        dataIndex: "danhgia",
+        key: "danhgia",
+      },
+      {
+        title: "Ghi chú",
+        dataIndex: "ghichu",
+        key: "ghichu",
+      },
+    ];
+  }
+  else if(props.option === "00") {
+    dataSource = props.dsDonHang.map((item, index) => {
+      return {
+        key: index,
+        nguoidat: item.nguoidat,
+        ngay: item.ngay,
+        trangthai: formatTrangThai(item.trangthai),
+        tongsanpham: item.tongsanpham,
+        tongtien: formatPrice(item.tongtien),
+        chitiet: (
+          <div className="chucNang3">
+            <div className="chucNang3_content" onClick={() => {
+              setChiTietDonHang(<ChiTietDonHang iddonhang={item.id} setChiTietDonHang={setChiTietDonHang}/>)
+            }}>
+              <i className="fa-solid fa-circle-info"></i>
+            </div>
+          </div>
+        ),
+        ghichu: item.ghichu,
+      };
+    });
+
+    columns = [
+      {
+        title: "Người đặt",
+        dataIndex: "nguoidat",
+        key: "nguoidat",
+      },
+      {
+        title: "Ngày đặt",
+        dataIndex: "ngay",
+        key: "ngay",
+      },
+      {
+        title: "Trang thái",
+        dataIndex: "trangthai",
+        key: "trangthai",
+      },
+      {
+        title: "Tổng sản phẩm",
+        dataIndex: "tongsanpham",
+        key: "tongsanpham",
+      },
+      {
+        title: "Tổng tiền",
+        dataIndex: "tongtien",
+        key: "tongtien",
+      },
+      {
+        title: "Chi tiết",
+        dataIndex: "chitiet",
+        key: "chitiet",
+      },
+      {
+        title: "Ghi chú",
+        dataIndex: "ghichu",
+        key: "ghichu",
+      },
+    ];
+  }
+  else if(props.option === "01") {
+    dataSource = props.dsDonHang.map((item, index) => {
+      return {
+        key: index,
+        nguoidat: item.nguoidat,
+        ngay: item.ngay,
+        trangthai: formatTrangThai(item.trangthai),
+        tongsanpham: item.tongsanpham,
+        tongtien: formatPrice(item.tongtien),
+        chitiet: (
+          <div className="chucNang3">
+            <div className="chucNang3_content" onClick={() => {
+              setChiTietDonHang(<ChiTietDonHang iddonhang={item.id} setChiTietDonHang={setChiTietDonHang}/>)
+            }}>
+              <i className="fa-solid fa-circle-info"></i>
+            </div>
+          </div>
+        ),
+        danhgia: (
+          <div className="chucNang3">
+            <div className="chucNang3_content" onClick={() => {
+              setChiTietDonHang(<DanhGiaDon iddonhang={item.id} setChiTietDonHang={setChiTietDonHang} />)
+            }}>
+              <i className="fa-solid fa-envelope"></i>
+            </div>
+          </div>
+        ),
+        ghichu: item.ghichu,
+      };
+    });
+
+    columns = [
+      {
+        title: "Người đặt",
+        dataIndex: "nguoidat",
+        key: "nguoidat",
+      },
+      {
+        title: "Ngày đặt",
+        dataIndex: "ngay",
+        key: "ngay",
+      },
+      {
+        title: "Trang thái",
+        dataIndex: "trangthai",
+        key: "trangthai",
+      },
+      {
+        title: "Tổng sản phẩm",
+        dataIndex: "tongsanpham",
+        key: "tongsanpham",
+      },
+      {
+        title: "Tổng tiền",
+        dataIndex: "tongtien",
+        key: "tongtien",
+      },
+      {
+        title: "Chi tiết",
+        dataIndex: "chitiet",
+        key: "chitiet",
+      },
+      {
+        title: "Đánh giá",
+        dataIndex: "danhgia",
+        key: "danhgia",
+      },
+      {
+        title: "Ghi chú",
+        dataIndex: "ghichu",
+        key: "ghichu",
+      },
+    ];
+  }
 
   const capNhat = async(id, trangthai) => {
     const data = await capNhatDonHang({id, trangthai, ghichu: ''})
@@ -322,6 +539,7 @@ function DanhSachDonHang(props) {
           dataSource={dataSource}
           columns={columns}
           className="DanhSachDonHang_content-table"
+          pagination={{pageSize: 5}}
         />
       </div>
       {

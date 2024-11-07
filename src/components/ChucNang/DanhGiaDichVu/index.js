@@ -4,12 +4,12 @@ import DanhSachDonHang from "../../components/DanhSachDonHang";
 import { layDanhSachTheoId } from "../../../services/DonHangAPI";
 import ThongBaoTrong from "../../components/ThongBaoTrong";
 
-function XemDonHang() {
+function DanhGiaDichVu() {
   const [dsDonHang, setDsDonHang] = useState([]);
+  const [nguoidung] = useState(JSON.parse(sessionStorage.getItem("nguoidung")));
 
   useEffect(() => {
     (async () => {
-      const nguoidung = JSON.parse(sessionStorage.getItem("nguoidung"));
       const idmanguoidung = nguoidung.id;
       const data = await layDanhSachTheoId({ idmanguoidung });
       if (data.dsDonHang) {
@@ -22,7 +22,7 @@ function XemDonHang() {
         setDsDonHang(newDs);
       }
     })();
-  }, []);
+  }, [nguoidung]);
 
   return (
     <div className="DanhGiaDichVu">
@@ -35,11 +35,11 @@ function XemDonHang() {
             link="/"
           />
         ) : (
-          <DanhSachDonHang dsDonHang={dsDonHang} idquyen={3} option="30" />
+          <DanhSachDonHang dsDonHang={dsDonHang} option="31" nguoidung={nguoidung}/>
         )}
       </div>
     </div>
   );
 }
 
-export default XemDonHang;
+export default DanhGiaDichVu;

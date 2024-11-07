@@ -29,7 +29,7 @@ function XemDonHang() {
             link="/"
           />
         ) : (
-          <DanhSachDonHang dsDonHang={dsDonHang} idquyen={3} option="30" />
+          <DanhSachDonHang dsDonHang={dsDonHang} option="30" />
         )}
       </div>
     </div>

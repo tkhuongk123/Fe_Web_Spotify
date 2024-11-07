@@ -12,6 +12,9 @@ import NV_TraDon from "../pages/NV_TraDon";
 import QL_ThongKe from "../pages/QL_ThongKe";
 import QL_DonHang from "../pages/QL_DonHang";
 import QL_XemDanhGia from "../pages/QL_XemDanhGia";
+import QL_TaiKhoan from "../pages/QL_TaiKhoan";
+import QL_SanPham from "../pages/QL_SanPham";
+import QL_LoaiSanPham from "../pages/QL_LoaiSanPham";
 
 import Bep_NhanDon from "../pages/Bep_NhanDon";
 import Bep_TraDon from "../pages/Bep_TraDon";
@@ -37,6 +40,9 @@ const quanLyRoutes = [
     { path: '/quanly/donhang', component: QL_DonHang, },
     { path: '/quanly/thongke', component: QL_ThongKe, },
     { path: '/quanly/xemdanhgia', component: QL_XemDanhGia, },
+    { path: '/quanly/taikhoan', component: QL_TaiKhoan, },
+    { path: '/quanly/sanpham', component: QL_SanPham, },
+    { path: '/quanly/loaisanpham', component: QL_LoaiSanPham, },
 ]
 
 const bepRoutes = [
