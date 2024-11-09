@@ -55,7 +55,7 @@ function DanhGiaDon(props) {
       <div className="DanhGiaDon_content">
         <h3>Đánh giá</h3>
         <form className="DanhGiaDon_form">
-          <h3>Số điểm</h3>
+          <h3>Mức độ</h3>
           <Select
             className="DanhGiaDon_form-select"
             defaultValue={danhGiaGet ? danhGiaGet.diemdanhgia : "5"}

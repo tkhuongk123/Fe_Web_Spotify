@@ -24,6 +24,10 @@ function ThongTinSanPham(props) {
           <div className="ThongTinSanPham_content-tong">
             <p>{formatPrice(props.item.soluong * props.item.dongia)}</p>
           </div>
+          <div className="ThongTinSanPham_content-soluong">
+            Số lượng: 
+            <p>{props.item.soluong}</p>
+          </div>
           
         </div>
       ) : (

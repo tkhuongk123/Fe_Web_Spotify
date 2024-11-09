@@ -50,4 +50,16 @@
     color: var(--primary-color);
 }
 
+.ThongTinSanPham_content-soluong {
+    flex: 0.5;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.ThongTinSanPham_content-soluong > p {
+    color: var(--primary-color);
+    margin-left: 4px;
+}
+
 
