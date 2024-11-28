@@ -34,4 +34,13 @@
     cursor: pointer;
 }
 
+.chucNang4_content {
+    width: fit-content;
+    background-color: #00e1ff;
+    padding: 10px 14px;
+    border-radius: var(--border-radius);
+    color: #333;
+    cursor: pointer;
+}
+
 

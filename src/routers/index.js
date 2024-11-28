@@ -5,9 +5,11 @@ import TrangChu from "../pages/TrangChu";
 import GioHang from "../pages/GioHang";
 import DonHang from "../pages/DonHang";
 import DanhGia from "../pages/DanhGia";
+import LichSuDatBan from "../pages/LichSuDatBan";
 
 import NV_NhanDon from "../pages/NV_NhanDon";
 import NV_TraDon from "../pages/NV_TraDon";
+import NV_XuatHoaDon from "../pages/NV_XuatHoaDon";
 
 import QL_ThongKe from "../pages/QL_ThongKe";
 import QL_DonHang from "../pages/QL_DonHang";
@@ -29,11 +31,13 @@ const khachHangRoutes = [
     { path: '/auth/giohang', component: GioHang, },
     { path: '/donhang', component: DonHang, },
     { path: '/danhgia', component: DanhGia, },
+    { path: '/lichsudatban', component: LichSuDatBan, },
 ]
 
 const nhanVienRoutes = [
     { path: '/nhanvien/nhandon', component: NV_NhanDon, },
     { path: '/nhanvien/tradon', component: NV_TraDon, },
+    { path: '/nhanvien/xuathoadon', component: NV_XuatHoaDon, },
 ]
 
 const quanLyRoutes = [

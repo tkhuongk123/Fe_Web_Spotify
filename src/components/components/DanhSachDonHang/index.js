@@ -141,7 +141,70 @@ function DanhSachDonHang(props) {
         key: "tuchoi",
       },
     ];
-  } else if(props.option === "20") {
+  } 
+  else if (props.option === "13") {
+    dataSource = props.dsDonHang.map((item, index) => {
+      return {
+        key: index,
+        nguoidat: item.nguoidat,
+        ngay: item.ngay,
+        tongsanpham: item.tongsanpham,
+        tongtien: formatPrice(item.tongtien),
+        chitiet: (
+          <div className="chucNang3">
+            <div className="chucNang3_content" onClick={() => {
+              setChiTietDonHang(<ChiTietDonHang iddonhang={item.id} setChiTietDonHang={setChiTietDonHang}/>)
+            }}>
+              <i className="fa-solid fa-circle-info"></i>
+            </div>
+          </div>
+        ),
+        xuathoadon: (
+          <div className="chucNang4">
+            <div className="chucNang4_content" onClick={() => {
+              xuathoadon(item)
+            }}>
+              <i className="fa-solid fa-file-pdf"></i>
+            </div>
+          </div>
+        ),
+      };
+    });
+
+    columns = [
+      {
+        title: "Người đặt",
+        dataIndex: "nguoidat",
+        key: "nguoidat",
+      },
+      {
+        title: "Ngày đặt",
+        dataIndex: "ngay",
+        key: "ngay",
+      },
+      {
+        title: "Tổng sản phẩm",
+        dataIndex: "tongsanpham",
+        key: "tongsanpham",
+      },
+      {
+        title: "Tổng tiền",
+        dataIndex: "tongtien",
+        key: "tongtien",
+      },
+      {
+        title: "Chi tiết",
+        dataIndex: "chitiet",
+        key: "chitiet",
+      },
+      {
+        title: "Xuất hóa đơn",
+        dataIndex: "xuathoadon",
+        key: "xuathoadon",
+      },
+    ];
+  }
+  else if(props.option === "20") {
     dataSource = props.dsDonHang.map((item, index) => {
       return {
         key: index,
@@ -530,6 +593,10 @@ function DanhSachDonHang(props) {
       const newDs = props.dsDonHang.filter(item => id !== item.id);
       props.setDsDonHang(newDs)
     }
+  }
+
+  const xuathoadon = (item) => {
+    console.log(item)
   }
 
   return (

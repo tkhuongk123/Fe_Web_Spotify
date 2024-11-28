@@ -27,6 +27,13 @@ function Toolbar() {
           >
             Trả đơn
           </li>
+          <li
+            onClick={() => {
+              navigate("/nhanvien/xuathoadon");
+            }}
+          >
+            Xuất hóa đơn
+          </li>
         </>
       );
     } else if (nguoidung.idquyen === 1) {
@@ -104,6 +111,13 @@ function Toolbar() {
             }}
           >
             Giỏ hàng
+          </li>
+          <li
+            onClick={() => {
+              navigate("/lichsudatban");
+            }}
+          >
+            Đặt bàn
           </li>
           <li
             onClick={() => {

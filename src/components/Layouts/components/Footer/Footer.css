@@ -39,3 +39,14 @@ Footer {
 .Footer_content-right>* {
     margin: 4px 0;
 }
+
+@media (max-width: 1240px) {
+    .Footer_content {
+        flex-direction:column-reverse;
+
+    }
+
+    .Footer_content-center {
+        margin-left: 0;
+    }
+}

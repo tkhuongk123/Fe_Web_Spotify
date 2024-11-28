@@ -56,3 +56,9 @@
     border-radius: var(--border-radius);
     color: #fff;
 }
+
+@media (max-width: 1240px) {
+    .MonTheoLoai_item {
+        width: calc(100% / 2 - 20px);
+    }
+}
