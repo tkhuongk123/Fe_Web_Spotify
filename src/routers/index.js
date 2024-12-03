@@ -10,6 +10,8 @@ import LichSuDatBan from "../pages/LichSuDatBan";
 import NV_NhanDon from "../pages/NV_NhanDon";
 import NV_TraDon from "../pages/NV_TraDon";
 import NV_XuatHoaDon from "../pages/NV_XuatHoaDon";
+import NV_Ban from "../pages/NV_Ban";
+import NV_QuanLyDatBan from "../pages/NV_QuanLyDatBan";
 
 import QL_ThongKe from "../pages/QL_ThongKe";
 import QL_DonHang from "../pages/QL_DonHang";
@@ -38,6 +40,8 @@ const nhanVienRoutes = [
     { path: '/nhanvien/nhandon', component: NV_NhanDon, },
     { path: '/nhanvien/tradon', component: NV_TraDon, },
     { path: '/nhanvien/xuathoadon', component: NV_XuatHoaDon, },
+    { path: '/nhanvien/ban', component: NV_Ban, },
+    { path: '/nhanvien/quanlydatban', component: NV_QuanLyDatBan, },
 ]
 
 const quanLyRoutes = [
@@ -56,7 +60,7 @@ const bepRoutes = [
 
 // Public routes
 const publicRoutes = [
-    { path: '/', component: Login, layout: LoginLayout},
+    { path: '/', component: Login, layout: LoginLayout },
 ];
 
 

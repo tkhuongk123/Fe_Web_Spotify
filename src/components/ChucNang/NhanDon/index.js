@@ -20,16 +20,17 @@ function NhanDon(props) {
               x.nguoidat = `${data.taiKhoan.tennguoidung} - ${data.taiKhoan.id}`;
               newDs.push(x);
             }
-          } else if(x.trangthai === "10" && props.nguoidung.idquyen === 2) {
+          } else if (x.trangthai === "10" && props.nguoidung.idquyen === 2) {
             newDs.push(x)
           }
         }
+
         setDsDonHang(newDs);
       }
     })();
   }, [props]);
 
-  
+
 
   return (
     <div className="NhanDon">

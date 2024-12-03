@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import "./DatBan.css";
-import { layDsBan } from "../../../services/BanAPI";
+import { taoChiTiet } from '../../../../services/ChiTietDatBanAPI';
+import { layDsBan, capNhapTrangThaiBanTheoId } from "../../../../services/BanAPI";
 import { DatePicker } from "antd";
+import { NotifyError, NotifySuccess } from "../../../components/Toast";
 
-function DatBan() {
+
+function DatBan(props) {
     const [dsBan, setDsBan] = useState([]);
-    const [ngaygio, setNgaygio] = useState("");
+
 
     useEffect(() => {
         (async () => {
@@ -16,22 +19,39 @@ function DatBan() {
         })();
     }, []);
 
-    const onChange = (date, dateString) => {
-        setNgaygio(dateString);
-    };
+
 
     async function Dat() {
         const idmanguoidung = JSON.parse(
             sessionStorage.getItem("nguoidung")
         ).id;
         let idban = "";
+        const currentDate = new Date();
         for (let x of dsBan) {
             if (x.color === "red") {
                 idban = x.id;
             }
         }
-        console.log(idmanguoidung, idban, ngaygio);
-    }
+        let values = {
+            idmanguoidung,
+            idban,
+            ngaygio: currentDate.toLocaleString(),
+            trangthai: '1'
+        }
+        const data = await taoChiTiet(values);
+        if (data.error) {
+            NotifyError(data.error);
+        } else {
+            await capNhapTrangThaiBanTheoId({ trangthai: "1", id: idban });
+            NotifySuccess("Đặt bàn thành công");
+            props.setChucNang("");
+            const newDs = [...props.dsChiTietDatBan];
+            newDs.push(values);
+            props.setDsChiTietDatBan(newDs);
+
+        }
+    };
+
 
     function setLaiDsChon(item) {
         const newDs = [...dsBan];
@@ -47,8 +67,8 @@ function DatBan() {
 
     return (
         <div className="DatBan" onClick={(e) => {
-            if(e.target.className === "DatBan") {
-                e.target.style.display = 'none'
+            if (e.target.className === "DatBan") {
+                props.setChucNang("");
             }
         }}>
             <div className="DatBan_content">
@@ -75,7 +95,7 @@ function DatBan() {
                                         }
                                     }}
                                 >
-                                    <i className="fa-solid fa-table"></i>
+                                    <span>B{item.vitri}</span>
                                     <p>
                                         Số người: <span>{item.soluong}</span>
                                     </p>
@@ -85,18 +105,11 @@ function DatBan() {
                     </ul>
                 </div>
                 <div className="DatBan_controll">
-                    <DatePicker
-                        showTime
-                        format="YYYY-MM-DD HH:mm"
-                        onChange={onChange}
-                    />
                     <div className="DatBan_controll-btn">
                         <button
                             className="DatBan_btn-mangve"
                             onClick={() => {
-                                document.querySelector(
-                                    ".DatBan"
-                                ).style.display = "none";
+                                props.setChucNang("");
                             }}
                         >
                             Đóng
@@ -113,7 +126,8 @@ function DatBan() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
+
 
 export default DatBan;

@@ -1,9 +1,10 @@
-import DatBan from "../../components/ChucNang/DatBan";
+import LS_DatBan from "../../components/ChucNang/LichSuDatBan";
+
 
 function LichSuDatBan() {
-    return <main className="LichSuDatBan">
-        Lich Su Dat Ban
-        <DatBan />
+    return <main className="LS_DatBan">
+        <h2 style={{ textAlign: "center", margin: "20px 0 20px 0" }}>Lịch sử đặt bàn</h2>
+        <LS_DatBan />
     </main>
 }
 

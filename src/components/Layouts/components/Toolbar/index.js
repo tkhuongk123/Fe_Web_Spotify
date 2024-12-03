@@ -34,6 +34,20 @@ function Toolbar() {
           >
             Xuất hóa đơn
           </li>
+          <li
+            onClick={() => {
+              navigate("/nhanvien/ban");
+            }}
+          >
+            Bàn
+          </li>
+          <li
+            onClick={() => {
+              navigate("/nhanvien/quanlydatban");
+            }}
+          >
+            Quản lý đặt bàn
+          </li>
         </>
       );
     } else if (nguoidung.idquyen === 1) {

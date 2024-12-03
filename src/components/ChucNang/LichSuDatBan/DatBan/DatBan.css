@@ -17,12 +17,12 @@
     border-radius: var(--border-radius);
 }
 
-.DatBan_content > h3 {
+.DatBan_content>h3 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.DatBan_listBan > ul {
+.DatBan_listBan>ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -31,7 +31,7 @@
     overflow-y: scroll;
 }
 
-.DatBan_listBan > ul > li {
+.DatBan_listBan>ul>li {
     width: 100px;
     height: 100px;
     display: flex;
@@ -46,11 +46,12 @@
     flex-direction: column;
 }
 
-.DatBan_listBan > ul > li > i {
+.DatBan_listBan>ul>li>span {
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
-.DatBan_listBan > ul > li > p{
+.DatBan_listBan>ul>li>p {
     font-size: 14px;
 }
 
@@ -58,7 +59,7 @@
     margin-top: 20px;
 }
 
-.DatBan_controll-btn{
+.DatBan_controll-btn {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
