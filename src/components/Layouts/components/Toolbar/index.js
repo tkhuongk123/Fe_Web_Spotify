@@ -1,167 +1,75 @@
 import { useEffect, useState } from "react";
 import "./Toolbar.css";
 import { useNavigate } from "react-router-dom";
+import { LoginOutlined, UserOutlined } from '@ant-design/icons';
 
 function Toolbar() {
   const [dsChucNang, setDsChucNang] = useState("");
   const [tenNguoiDung, setTenNguoiDung] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const nguoidung = JSON.parse(sessionStorage.getItem("nguoidung"));
-    setTenNguoiDung(nguoidung.tennguoidung);
-    if (nguoidung.idquyen === 0) {
-      setDsChucNang(
-        <>
-          <li
-            onClick={() => {
-              navigate("/nhanvien/nhandon");
-            }}
-          >
-            Nhận đơn
-          </li>
-          <li
-            onClick={() => {
-              navigate("/nhanvien/tradon");
-            }}
-          >
-            Trả đơn
-          </li>
-          <li
-            onClick={() => {
-              navigate("/nhanvien/xuathoadon");
-            }}
-          >
-            Xuất hóa đơn
-          </li>
-          <li
-            onClick={() => {
-              navigate("/nhanvien/ban");
-            }}
-          >
-            Bàn
-          </li>
-          <li
-            onClick={() => {
-              navigate("/nhanvien/quanlydatban");
-            }}
-          >
-            Quản lý đặt bàn
-          </li>
-        </>
-      );
-    } else if (nguoidung.idquyen === 1) {
-      setDsChucNang(
-        <>
-          <li
-            onClick={() => {
-              navigate("/quanly/donhang");
-            }}
-          >
-            Lịch sử đơn hàng
-          </li>
-          <li
-            onClick={() => {
-              navigate("/quanly/xemdanhgia");
-            }}
-          >
-            Xem đánh giá
-          </li>
-          <li
-            onClick={() => {
-              navigate("/quanly/taikhoan");
-            }}
-          >
-            Tài khoản
-          </li>
-          <li
-            onClick={() => {
-              navigate("/quanly/sanpham");
-            }}
-          >
-            Sản phẩm
-          </li>
-          <li
-            onClick={() => {
-              navigate("/quanly/loaisanpham");
-            }}
-          >
-            Loại sản phẩm
-          </li>
-        </>
-      );
-    } else if (nguoidung.idquyen === 2) {
-      setDsChucNang(
-        <>
-          <li
-            onClick={() => {
-              navigate("/bep/nhandon");
-            }}
-          >
-            Nhận đơn
-          </li>
-          <li
-            onClick={() => {
-              navigate("/bep/tradon");
-            }}
-          >
-            Trả đơn
-          </li>
-        </>
-      );
-    } else if (nguoidung.idquyen === 3) {
-      setDsChucNang(
-        <>
-          <li
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            Trang chủ
-          </li>
-          <li
-            onClick={() => {
-              navigate("/auth/giohang");
-            }}
-          >
-            Giỏ hàng
-          </li>
-          <li
-            onClick={() => {
-              navigate("/lichsudatban");
-            }}
-          >
-            Đặt bàn
-          </li>
-          <li
-            onClick={() => {
-              navigate("/donhang");
-            }}
-          >
-            Đơn hàng
-          </li>
-          <li
-            onClick={() => {
-              navigate("/danhgia");
-            }}
-          >
-            Đánh giá
-          </li>
-        </>
-      );
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const nguoidung = JSON.parse(sessionStorage.getItem("nguoidung"));
+  //   setTenNguoiDung(nguoidung.tennguoidung);
+  //   if (nguoidung.idquyen === 0) {
+  //     setDsChucNang(
+  //       <>
+  //         <li
+  //           onClick={() => {
+  //             navigate("/nhanvien/nhandon");
+  //           }}
+  //         >
+  //           Nhận đơn
+  //         </li>
+  //         <li
+  //           onClick={() => {
+  //             navigate("/nhanvien/tradon");
+  //           }}
+  //         >
+  //           Trả đơn
+  //         </li>
+  //         <li
+  //           onClick={() => {
+  //             navigate("/nhanvien/xuathoadon");
+  //           }}
+  //         >
+  //           Xuất hóa đơn
+  //         </li>
+  //         <li
+  //           onClick={() => {
+  //             navigate("/nhanvien/ban");
+  //           }}
+  //         >
+  //           Bàn
+  //         </li>
+  //         <li
+  //           onClick={() => {
+  //             navigate("/nhanvien/quanlydatban");
+  //           }}
+  //         >
+  //           Quản lý đặt bàn
+  //         </li>
+  //       </>
+  //     );
+  //   } 
+  // }, [navigate]);
 
   return (
-    <nav className="Toolbar">
-      <div className="Toolbar_content">
-        <div className="Toolbar_content-img">
-          <img src={`${process.env.PUBLIC_URL}/favicon.png`} alt="Logo" />
+    <nav className="toolbar">
+      <div className="header">
+        <div className="user-panel">
+          <div className="role">
+            <img src={`${process.env.PUBLIC_URL}/AdminLogo.png`} alt="Logo" />
+            <span style={{fontSize: '20px', fontWeight: '300'}}>Admin</span>
+          </div>
+          <div className="user">
+            {/* <img src={`${process.env.PUBLIC_URL}/favicon.png`} alt="Logo" /> */}
+            <UserOutlined style={{ fontSize: '35px', margin: '0 10px' }}/>
+            <span>tkhuo</span>
+          </div>
         </div>
-        <h4>Xin chào: {tenNguoiDung}</h4>
-        <div className="Toolbar_content-subnav">
+        <div className="subnav">
           <ul>
-            {dsChucNang}
             <li
               onClick={(event) => {
                 navigate('/')
@@ -171,6 +79,19 @@ function Toolbar() {
                 }, 100)
               }}
             >
+              <LoginOutlined style={{ marginRight: '10px', fontSize: '20px' }}></LoginOutlined>
+              Đăng xuất
+            </li>
+            <li
+              onClick={(event) => {
+                navigate('/')
+                setTimeout(() => {
+                  sessionStorage.removeItem("nguoidung");
+                  window.location.reload();
+                }, 100)
+              }}
+            >
+              <LoginOutlined style={{ marginRight: '10px', fontSize: '20px' }}></LoginOutlined>
               Đăng xuất
             </li>
           </ul>

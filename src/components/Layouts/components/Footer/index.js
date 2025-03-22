@@ -1,48 +1,73 @@
 import "./Footer.css";
+import { Row, Col } from "antd";
+import { InstagramOutlined, TwitterOutlined, FacebookOutlined } from "@ant-design/icons";
 
 function Footer() {
   return (
-    <footer className="Footer">
-      <div className="Footer_content">
-        <div className="Footer_content-left">
-          <h2>PT KITCHEN</h2>
-          <p>
-            Nơi trải nghiệm sự thăng hoa của ẩm thực, mang hương vị nhà hàng đến
-            với gia đình bạn.
-          </p>
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/images/bo-cong-thuong.png`}
-            alt="thong-bao-bo-cong-thuong"
-          />
-        </div>
-        <div className="Footer_content-center">
-          <h3>LIÊN HỆ</h3>
-          <h4>CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ DỊCH VỤ NHÓM 2</h4>
-          <p>
-            <strong>Mã số thuế</strong>: 316657994
-          </p>
-          <p>
-            <strong>Địa chỉ ĐKKD</strong>: 273 An Dương Vương, Phường 3, Quận 5, Tp. Hồ Chí Minh
-          </p>
-          <p>
-            <strong>Phone</strong>: 1900 633 818
-          </p>
-          <p>
-            <strong>Email</strong>: order.ptkitchen@gmail.com
-          </p>
-        </div>
-        <div className="Footer_content-right">
-          <h3>Hỗ trợ Khách hàng</h3>
+    <footer className="footer">
+      <Row className="wrap-main">
+        <Col span={6}>
+          <h2 className="heading">
+            Công ty
+          </h2>
           <ul>
-            <li>- Chính sách bảo mật thông tin</li> 
-            <li>- Quy chế hoạt động</li>
-            <li>- Chính sách thanh toán</li>
-            <li>- Chính sách thay đổi đơn hàng</li>
-            <li>- Chính sách vận chuyển</li>
-            <li>- Tự công bố sản phẩm</li>
+            <li><b>Giới thiệu</b></li> 
+            <li><b>Việc làm</b></li>
+            <li><b>For the record</b></li>
           </ul>
-        </div>
-      </div>
+        </Col>
+        <Col span={6} className="flex">
+          <h2 className="heading">
+            Cộng đồng
+          </h2>
+          <ul>
+            <li><b>Dành cho các nghệ sĩ</b></li> 
+            <li><b>Nhà phát triển</b></li>
+            <li><b>Quảng cáo</b></li>
+            <li><b>Nhà đầu tư</b></li>
+            <li><b>Nhà cung cấp</b></li>
+          </ul>
+        </Col>
+        <Col span={6} className="flex">
+          <h2 className="heading">
+            Liên kết hữu ích
+          </h2>
+          <ul>
+            <li><b>Hỗ trợ</b></li> 
+            <li><b>Ứng dụng di động miễn phí</b></li>
+          </ul>
+        </Col>
+        <Col span={6} className="flex">
+          <h2 className="heading">
+            Các gói của Spotify
+          </h2>
+          <ul>
+            <li><b>Premium Individual</b></li> 
+            <li><b>Premium Student</b></li>
+            <li><b>Spotify Free</b></li>
+          </ul>
+        </Col>
+
+        <Col>
+        
+        </Col>
+        
+
+      </Row>
+      <Row >
+        <Col span={24}>
+          <div className="bottom">
+            <p className="copyright">
+              © 2025 Spotify AB
+            </p>
+            <div className="social-list">
+              <InstagramOutlined />
+              <TwitterOutlined />
+              <FacebookOutlined />
+            </div>
+          </div>
+        </Col>
+      </Row>
     </footer>
   );
 }

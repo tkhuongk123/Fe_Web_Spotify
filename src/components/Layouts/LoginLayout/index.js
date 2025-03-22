@@ -10,7 +10,7 @@ function LoginLayout({ children }) {
                 <Header />
             </div>
             <div className="LoginLayout_Main">
-                <img src={`${process.env.PUBLIC_URL}/favicon.png`} alt="Logo"/>
+                <img src={`${process.env.PUBLIC_URL}/spotify-logo.png`} alt="Logo"/>
                 {children}
             </div>
             <div className="LoginLayout_Footer">

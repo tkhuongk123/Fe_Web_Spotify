@@ -7,9 +7,7 @@ function DefaultLayout({ children }) {
         <div className="DefaultLayout">
             <div className="DefaultLayout_Header">
             </div>
-            <div className="DefaultLayout_Toolbar">
-                <Toolbar />
-            </div>
+
             <div className="DefaultLayout_Main">
                 {children}
             </div>

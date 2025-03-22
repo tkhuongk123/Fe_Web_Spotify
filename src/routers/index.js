@@ -1,67 +1,34 @@
 // Page
 import Login from "../pages/Login";
+import Signup from "../pages/Signup";
 
+
+import QL_AudioMusic from "../pages/QL_AudioMusic";
 import TrangChu from "../pages/TrangChu";
-import GioHang from "../pages/GioHang";
-import DonHang from "../pages/DonHang";
-import DanhGia from "../pages/DanhGia";
-import LichSuDatBan from "../pages/LichSuDatBan";
 
-import NV_NhanDon from "../pages/NV_NhanDon";
-import NV_TraDon from "../pages/NV_TraDon";
-import NV_XuatHoaDon from "../pages/NV_XuatHoaDon";
-import NV_Ban from "../pages/NV_Ban";
-import NV_QuanLyDatBan from "../pages/NV_QuanLyDatBan";
 
-import QL_ThongKe from "../pages/QL_ThongKe";
-import QL_DonHang from "../pages/QL_DonHang";
-import QL_XemDanhGia from "../pages/QL_XemDanhGia";
-import QL_TaiKhoan from "../pages/QL_TaiKhoan";
-import QL_SanPham from "../pages/QL_SanPham";
-import QL_LoaiSanPham from "../pages/QL_LoaiSanPham";
 
-import Bep_NhanDon from "../pages/Bep_NhanDon";
-import Bep_TraDon from "../pages/Bep_TraDon";
 
 
 // Layout
-import { LoginLayout } from "../components/Layouts";
+import LoginLayout from "../components/Layouts/LoginLayout";
+import ClientLayout from "../components/Layouts/ClientLayout";
 
-const khachHangRoutes = [
-    { path: '/', component: TrangChu, },
-
-    { path: '/auth/giohang', component: GioHang, },
-    { path: '/donhang', component: DonHang, },
-    { path: '/danhgia', component: DanhGia, },
-    { path: '/lichsudatban', component: LichSuDatBan, },
-]
-
-const nhanVienRoutes = [
-    { path: '/nhanvien/nhandon', component: NV_NhanDon, },
-    { path: '/nhanvien/tradon', component: NV_TraDon, },
-    { path: '/nhanvien/xuathoadon', component: NV_XuatHoaDon, },
-    { path: '/nhanvien/ban', component: NV_Ban, },
-    { path: '/nhanvien/quanlydatban', component: NV_QuanLyDatBan, },
-]
 
 const quanLyRoutes = [
-    { path: '/quanly/donhang', component: QL_DonHang, },
-    { path: '/quanly/thongke', component: QL_ThongKe, },
-    { path: '/quanly/xemdanhgia', component: QL_XemDanhGia, },
-    { path: '/quanly/taikhoan', component: QL_TaiKhoan, },
-    { path: '/quanly/sanpham', component: QL_SanPham, },
-    { path: '/quanly/loaisanpham', component: QL_LoaiSanPham, },
+    // { path: '/quanly/taikhoan', component: QL_TaiKhoan, },
+    // { path: '/quanly/sanpham', component: QL_SanPham, },
+
 ]
 
-const bepRoutes = [
-    { path: '/bep/nhandon', component: Bep_NhanDon, },
-    { path: '/bep/tradon', component: Bep_TraDon, },
-]
 
 // Public routes
 const publicRoutes = [
-    { path: '/', component: Login, layout: LoginLayout },
+    // { path: '/', component: QL_AudioMusic, layout: AdminLayout },
+    { path: '/', component: TrangChu, layout: ClientLayout },
+    // { path: '/', component: Login, layout: LoginLayout },
+    { path: '/signup', component: Signup, layout: LoginLayout },
 ];
 
 
-export { khachHangRoutes, nhanVienRoutes, quanLyRoutes, bepRoutes, publicRoutes };
+export { quanLyRoutes, publicRoutes };

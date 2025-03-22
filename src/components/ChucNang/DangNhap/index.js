@@ -2,8 +2,10 @@ import validation from "../../../utils/validation";
 import { NotifyError, NotifyWarning } from "../../components/Toast";
 import "./DangNhap.css";
 import {LoginAPI} from "../../../services/TaiKhoanAPI";
+import { useNavigate } from "react-router-dom";
 
 function DangNhap() {
+    const navigate = useNavigate();
 
     const login = async() => {
         const tenDangNhapE = document.getElementById('tendangnhap')
@@ -45,12 +47,14 @@ function DangNhap() {
                     <input id="matkhau" type="password" placeholder="Mật khẩu"/>
 
                     <div className="DangNhap_option">
-                        <div className="DangNhap_option-nhoMatKhau">
-                            <input id="nhomatkhau" type="checkbox"/>
-                            <label htmlFor="nhomatkhau">Nhớ mật khẩu</label>
-                        </div>
                         <div className="DangNhap_option-quenMatKhau">
-                            <span>Quên mật khẩu?</span>
+                            <span 
+                                onClick={() => {
+                                    navigate("/signup");
+                                }}
+                            >
+                                Đăng Ký
+                            </span>
                         </div>
                     </div>  
 
@@ -61,4 +65,4 @@ function DangNhap() {
     )
 }
 
-export default DangNhap
+export default DangNhap;

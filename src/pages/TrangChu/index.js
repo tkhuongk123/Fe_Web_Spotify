@@ -1,11 +1,11 @@
-import ChonMon from "../../components/ChucNang/ChonMon";
+import TrangChuComponent from "../../components/ChucNang/TrangChu"
 
 function TrangChu() {
     return (
         <main className="TrangChu">
-            <ChonMon />
+            <TrangChuComponent />
         </main>
     )
 }
 
-export default TrangChu
+export default TrangChu;

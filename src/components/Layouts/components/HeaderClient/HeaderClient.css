@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    position: fixed;
+    background-color: #000;
+    height: 60px;
+}
+
+.left-container {
+    display: flex;
+    justify-content: center;
+}
+
+.left-container .logo {
+
+}
+
+
+.icon {
+    font-size: 52px;
+    color: white;
+    transform: translateY(10px);
+    margin: 0 10px;
+}

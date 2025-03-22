@@ -7,7 +7,8 @@
 .Header>h1 {
     width: 100%;
     padding: 10px;
-    background-color: var(--primary-color);
+    background-color: #181821;
+    /* background-color: var(--primary-btn-color); */
     text-align: center;
     margin-bottom: 10px;
 }
