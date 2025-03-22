@@ -6,7 +6,7 @@ import { SpotifyOutlined, HomeOutlined } from '@ant-design/icons';
 function HeaderClient() {
 
     return (
-        <div className="header">
+        <div className="header-client">
             <div className="left-container">
                 <div className="logo">
                     <SpotifyOutlined className="icon"/>

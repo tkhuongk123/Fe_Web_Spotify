@@ -13,6 +13,7 @@ import TrangChu from "../pages/TrangChu";
 // Layout
 import LoginLayout from "../components/Layouts/LoginLayout";
 import ClientLayout from "../components/Layouts/ClientLayout";
+import AdminLayout from "../components/Layouts/AdminLayout";
 
 
 const quanLyRoutes = [
@@ -24,9 +25,7 @@ const quanLyRoutes = [
 
 // Public routes
 const publicRoutes = [
-    // { path: '/', component: QL_AudioMusic, layout: AdminLayout },
-    { path: '/', component: TrangChu, layout: ClientLayout },
-    // { path: '/', component: Login, layout: LoginLayout },
+    { path: '/', component: QL_AudioMusic, layout: AdminLayout },
     { path: '/signup', component: Signup, layout: LoginLayout },
 ];
 
