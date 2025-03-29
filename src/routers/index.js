@@ -8,8 +8,6 @@ import TrangChu from "../pages/TrangChu";
 
 
 
-
-
 // Layout
 import LoginLayout from "../components/Layouts/LoginLayout";
 import ClientLayout from "../components/Layouts/ClientLayout";
@@ -25,7 +23,11 @@ const quanLyRoutes = [
 
 // Public routes
 const publicRoutes = [
-    { path: '/', component: QL_AudioMusic, layout: AdminLayout },
+    { path: '/', component: TrangChu, layout: ClientLayout },
+    { path: '/playlist', component: TrangChu, layout: ClientLayout },
+    { path: '/favorite', component: TrangChu, layout: ClientLayout },
+    { path: '/admin/audio-music', component: QL_AudioMusic, layout: AdminLayout },
+    { path: '/signin', component: Login, layout: LoginLayout },
     { path: '/signup', component: Signup, layout: LoginLayout },
 ];
 

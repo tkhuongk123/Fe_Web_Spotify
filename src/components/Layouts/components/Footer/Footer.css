@@ -1,6 +1,8 @@
 .footer {
+    left: 0;
+    bottom: 0;
     width: 100%;
-    padding: 68px 150px 60px;
+    padding: 80px 50px;
     background-color: #181821;
     color: #888;
     border-top: 1px solid #ccc;
@@ -32,7 +34,7 @@ ul {
     align-items: center;
     gap: 15px;
     font-size: 32px;
-    margin-right: 100px;
+    margin-right: 70px;
 }
 
 

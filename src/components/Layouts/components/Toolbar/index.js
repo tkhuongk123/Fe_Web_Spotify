@@ -63,25 +63,12 @@ function Toolbar() {
             <span style={{fontSize: '20px', fontWeight: '300'}}>Admin</span>
           </div>
           <div className="user">
-            {/* <img src={`${process.env.PUBLIC_URL}/favicon.png`} alt="Logo" /> */}
             <UserOutlined style={{ fontSize: '35px', margin: '0 10px' }}/>
             <span>tkhuo</span>
           </div>
         </div>
         <div className="subnav">
           <ul>
-            <li
-              onClick={(event) => {
-                navigate('/')
-                setTimeout(() => {
-                  sessionStorage.removeItem("nguoidung");
-                  window.location.reload();
-                }, 100)
-              }}
-            >
-              <LoginOutlined style={{ marginRight: '10px', fontSize: '20px' }}></LoginOutlined>
-              Đăng xuất
-            </li>
             <li
               onClick={(event) => {
                 navigate('/')

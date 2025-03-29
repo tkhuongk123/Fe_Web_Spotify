@@ -1,6 +1,28 @@
 import "./HeaderClient.css";
-import { Button } from "antd";
-import { SpotifyOutlined, HomeOutlined } from '@ant-design/icons';
+import { SpotifyOutlined, HomeFilled, ShopFilled, ToolFilled, SearchOutlined } from '@ant-design/icons';
+import { Button, Tooltip, Input, Dropdown } from "antd";
+const items = [
+    {
+      label: (
+        <a href="https://www.antgroup.com" target="_blank" rel="noopener noreferrer">
+          1st menu item
+        </a>
+      ),
+      key: '0',
+    },
+    {
+      label: (
+        <a href="https://www.aliyun.com" target="_blank" rel="noopener noreferrer">
+          2nd menu item
+        </a>
+      ),
+      key: '1',
+    },
+    {
+      label: '3rd menu item',
+      key: '2',
+    },
+];
 
 
 function HeaderClient() {
@@ -9,21 +31,46 @@ function HeaderClient() {
         <div className="header-client">
             <div className="left-container">
                 <div className="logo">
-                    <SpotifyOutlined className="icon"/>
+                    <SpotifyOutlined className="icon-spotify"/>
                 </div>
                 <div className="home">
-                    <Button 
-                        className="icon"
-                        icon={<HomeOutlined />}
-                        ghost
-                        // style={{ border: "none" }}
-                    >
+                    <Tooltip placement="bottom" title={"Trang chủ"}>
+                        <div className="icon-container">
+                            <HomeFilled/>
+                        </div>
+                    </Tooltip>
+                </div>
 
-                    </Button>
+                <div className="search-input">
+                    <Input
+                        className="custom-placeholder"
+                        placeholder="Tìm kiếm..."
+                        
+                        prefix={<SearchOutlined 
+                                    style={{
+                                        fontSize: '20px',
+                                        marginRight: '5px'
+                                    }}
+                               />}
+                        addonAfter={
+                            <Tooltip placement="bottom" title={"Duyệt tìm"}>
+                                <ShopFilled />
+                            </Tooltip>
+                        }
+                    />
                 </div>
 
             </div>
-            <div className="right-container"></div>
+            <div className="right-container">
+                <div className="feature-btn">
+                    <button>Khám phá Premium</button>
+                </div>
+                <Dropdown menu={{ items }} trigger={['click']}>
+                    <Tooltip className="user-wrapper" placement="bottom" title={"Khuong Tran"}>
+                        <span>K</span>
+                    </Tooltip>
+                </Dropdown>
+            </div>
         </div>
     )
 }

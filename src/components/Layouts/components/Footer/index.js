@@ -48,10 +48,6 @@ function Footer() {
           </ul>
         </Col>
 
-        <Col>
-        
-        </Col>
-        
 
       </Row>
       <Row >

@@ -6,10 +6,10 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* padding-left: var(--with-toolbar); */
 } 
 
-.ClientLayout_Main {
+
+.ClientLayout_WrapContent {
     flex: 1;
-    background-color: #f4f6f9;
+    background-color: #000;
 }

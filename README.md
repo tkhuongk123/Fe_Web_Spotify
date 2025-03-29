@@ -70,18 +70,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-trangthai
-
-Khach hang:
-30: Dat
-31: Dat
-
-// trangthai
-Nhân viên:
-10: Nhận đơn
-11: Trả đơn
-12: Từ chối
-
-Bếp:
-20: Nhận đơn
-21: Trả đơn

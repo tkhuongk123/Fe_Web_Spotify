@@ -1,6 +1,6 @@
-import Footer from "../components/Footer";
-import Toolbar from "../components/Toolbar";
 import HeaderClient from "../components/HeaderClient";
+import Playlists from "../components/Playlists";
+import MediaControls from "../components/MediaControls";
 import "./ClientLayout.css";
 
 function ClientLayout({ children }) {
@@ -9,11 +9,16 @@ function ClientLayout({ children }) {
             <div className="ClientLayout_Header">
                 <HeaderClient />
             </div>
-            <div className="ClientLayout_Main">
-                {children}
+            <div className="ClientLayout_WrapContent">
+                <div className="ClientLayout_Playlists">
+                    <Playlists />
+                </div>
+                <div className="ClientLayout_Main">
+                    {children}
+                </div>
             </div>
             <div className="ClientLayout_Media-Controls">
-
+                <MediaControls />
             </div>
         </div>
     )
