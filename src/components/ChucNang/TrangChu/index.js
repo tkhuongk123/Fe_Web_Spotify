@@ -5,6 +5,7 @@ import "./TrangChu.css";
 import HomePage from "./HomePage";
 import PlaylistPage from "./PlaylistPage";
 import FavoritePage from "./FavoritePage";
+import TrackPage from "./TrackPage";
 
 function TrangChu() {
     // Lấy toàn bộ đường dẫn
@@ -19,6 +20,8 @@ function TrangChu() {
                 return <PlaylistPage />
             case "favorite":
                 return <FavoritePage />
+            case "track":
+                return <TrackPage />
             default:
                 return <HomePage />
         }

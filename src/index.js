@@ -4,13 +4,15 @@ import App from './App';
 import Toast from './components/components/Toast';
 import GlobalStyles from "./components/GlobalStyles";
 import reportWebVitals from './reportWebVitals';
+import { TrackProvider, useTrack } from "../src/components/Layouts/contexts/TrackProvider";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyles>
-      <App />
-      <Toast />
+        <App />
+        <Toast />
+      
     </GlobalStyles>
   </React.StrictMode>
 );

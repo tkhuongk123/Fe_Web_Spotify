@@ -1,6 +1,7 @@
 import "./HeaderClient.css";
 import { SpotifyOutlined, HomeFilled, ShopFilled, ToolFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Tooltip, Input, Dropdown } from "antd";
+import { useNavigate } from "react-router-dom";
 const items = [
     {
       label: (
@@ -26,6 +27,7 @@ const items = [
 
 
 function HeaderClient() {
+    const navigate = useNavigate();
 
     return (
         <div className="header-client">
@@ -36,7 +38,11 @@ function HeaderClient() {
                 <div className="home">
                     <Tooltip placement="bottom" title={"Trang chủ"}>
                         <div className="icon-container">
-                            <HomeFilled/>
+                            <HomeFilled
+                                onClick={() => {
+                                    navigate("/");
+                                }}
+                            />
                         </div>
                     </Tooltip>
                 </div>

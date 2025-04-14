@@ -1,11 +1,23 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import "./PlaylistPage.css";
 import { PlayCircleFilled, CloseCircleOutlined,
     ClockCircleOutlined, CaretRightFilled 
 } from '@ant-design/icons';
-import { Tooltip, Popconfirm } from "antd";
+import { Tooltip, Popconfirm, Table } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
 
 function PlaylistPage() {
+    const { idPlaylist } = useParams();
+    const [positionTrack, setPositionTrack] = useState(0);
+
+    const mockTrack = {
+        type: "playlist",
+        isPlaylist: idPlaylist,
+        positionTrack: positionTrack
+    }
+
 
     return (
         <div className="PlaylistPage">
@@ -77,7 +89,13 @@ function PlaylistPage() {
                                             textAlign: "center"
                                         }}
                                     />
-                                    <span className="number">1</span>
+                                    {/* <span className="number">1</span> */}
+                                    <FontAwesomeIcon 
+                                        className="number"
+                                        icon={faMusic} 
+                                        beat
+                                        style={{ color: '#1aa94d' }} 
+                                    />
                                 </td>
                                 <td class="title-col">
                                     <div className="track">
@@ -151,7 +169,7 @@ function PlaylistPage() {
                             
                         </tbody>
                     </table>
-
+        
                 </div>
             </div>
 

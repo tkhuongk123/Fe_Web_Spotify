@@ -24,8 +24,9 @@ const quanLyRoutes = [
 // Public routes
 const publicRoutes = [
     { path: '/', component: TrangChu, layout: ClientLayout },
-    { path: '/playlist', component: TrangChu, layout: ClientLayout },
+    { path: '/playlist/:idPlaylist', component: TrangChu, layout: ClientLayout },
     { path: '/favorite', component: TrangChu, layout: ClientLayout },
+    { path: '/track/:idTrack', component: TrangChu, layout: ClientLayout },
     { path: '/admin/audio-music', component: QL_AudioMusic, layout: AdminLayout },
     { path: '/signin', component: Login, layout: LoginLayout },
     { path: '/signup', component: Signup, layout: LoginLayout },

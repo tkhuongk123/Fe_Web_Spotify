@@ -1,26 +1,26 @@
 /* TABLE TRACKS STYLE */
-table {
+.table-tracks {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
 }
 
-thead {
+.table-tracks thead {
     border: none;
 }
 
-thead tr:hover {
+.table-tracks thead tr:hover {
     background: none;
 }
 
-th {
+.table-tracks th {
     text-align: middle;
     border-bottom: 1px solid #382b2b;
     color: #aaa;
     font-weight: normal;
 }
 
-tr {
+.table-tracks tr {
     border: none;
     display: flex;
     align-items: center;
@@ -28,19 +28,19 @@ tr {
 }
 
 
-tr:hover {
+.table-tracks tr:hover {
     background-color: #484848;
 }
 
-tr:hover .number-col .play-icon {
+.table-tracks tr:hover .number-col .play-icon {
     display: block !important;
 }
 
-tr:hover .number-col .number {
+.table-tracks tr:hover .number-col .number {
     display: none !important;
 }
 
-td {
+.table-tracks td {
     vertical-align: middle;
 }
 

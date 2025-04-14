@@ -3,9 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { DefaultLayout } from "./components/Layouts";
 import { quanLyRoutes, publicRoutes } from "./routers";
+import { TrackProvider, useTrack } from "../src/components/Layouts/contexts/TrackProvider";
 
 function App() {
   const nguoiDung = JSON.parse(sessionStorage.getItem('nguoidung'));
+
+  
+  
 
   if (!nguoiDung) 
   {

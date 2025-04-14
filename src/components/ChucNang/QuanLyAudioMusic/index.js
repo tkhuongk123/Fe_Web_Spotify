@@ -19,26 +19,10 @@ export default function Courses() {
     const mockCourses = [
       {
         id: "1",
-        title: "Introduction to React",
-        description: "Learn the basics of React development",
         instructor: "John Doe",
         category: "Web Development",
         status: "active",
         students: 120,
-        videos: [
-          {
-            id: "v1",
-            title: "Getting Started with React",
-            duration: "10:30",
-            url: "https://example.com/video1",
-          },
-          {
-            id: "v2",
-            title: "Components and Props",
-            duration: "15:45",
-            url: "https://example.com/video2",
-          },
-        ],
         actions: (
             <Space size="middle">
               <Button 
@@ -63,7 +47,7 @@ export default function Courses() {
             </Space>
         )
       },
-
+      
     ]
 
     setCourses(mockCourses);
@@ -79,9 +63,9 @@ export default function Courses() {
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     {
       title: "Instructor",
@@ -126,11 +110,6 @@ export default function Courses() {
       key: "students",
     },
     {
-      title: "Videos",
-      key: "videos",
-      render: (_, record) => record.videos.length,
-    },
-    {
       title: "Actions",
       key: "actions",
       dataIndex: "actions"
@@ -162,9 +141,9 @@ export default function Courses() {
         columns={columns} 
         dataSource={courses} 
         rowKey="id" 
-        pagination={{ pageSize: 1, position: ["bottomCenter"] }} 
-        
+        pagination={{pageSize: 10}}
       />
+
       {chucNang}
     </div>
   )
