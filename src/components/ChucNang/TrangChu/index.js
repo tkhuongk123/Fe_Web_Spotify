@@ -6,6 +6,8 @@ import HomePage from "./HomePage";
 import PlaylistPage from "./PlaylistPage";
 import FavoritePage from "./FavoritePage";
 import TrackPage from "./TrackPage";
+import GenrePage from "./GenrePage";
+import VideoPage from "./VideoPage";
 
 function TrangChu() {
     // Lấy toàn bộ đường dẫn
@@ -22,6 +24,10 @@ function TrangChu() {
                 return <FavoritePage />
             case "track":
                 return <TrackPage />
+            case "genre":
+                return <GenrePage />
+            case "video":
+                return <VideoPage />
             default:
                 return <HomePage />
         }

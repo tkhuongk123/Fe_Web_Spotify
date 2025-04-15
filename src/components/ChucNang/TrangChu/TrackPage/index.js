@@ -13,7 +13,7 @@ function TrackPage() {
 
     const mockTrack = {
         type: "track",
-        idTrack: idTrack
+        id: idTrack
     }
 
 

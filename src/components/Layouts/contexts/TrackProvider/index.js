@@ -11,7 +11,7 @@ export function TrackProvider({ children }) {
     });
     const [isPlaying, setIsPlaying] = useState(false);
 
-    
+
 
     useEffect(() => {
         if (trackInfo) {

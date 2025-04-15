@@ -12,59 +12,93 @@ import { Tooltip, Input, Slider } from "antd";
 
 function MediaControls() {
     const [currentTime, setCurrentTime] = useState(0);
-    // const [isPlaying, setIsPlaying] = useState(false);
     const [currentVolume, setCurrentVolume] = useState(100);
     const [currentTrack, setCurrentTrack] = useState(null);
     const { trackInfo, setTrackInfo, isPlaying, setIsPlaying } = useTrack();
 
     const audioRef = useRef(null);
 
+    // Mock Data
+    const tracks = [
+        {
+            id: 1,
+            title: 'Dấu mưa',
+            duration: 285,
+            artist: 'Trung Quân',
+            genre_id: 1,
+            img_file_path: null,
+            audio_file_path: 'dau_mua.mp3', 
+            video_file_path: null
+        },
+        {
+            id: 2,
+            title: 'Nước mắt em lau bằng tình yêu mới',
+            duration: 285,
+            artist: 'Dalab',
+            genre_id: 1,
+            img_file_path: null,
+            audio_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3', 
+            video_file_path: null
+        },
+        {
+            id: 3,
+            title: 'Yêu thương ngày đó',
+            duration: 285,
+            artist: 'Soobin Hoàng Sơn',
+            genre_id: 1,
+            img_file_path: null,
+            audio_file_path: 'yeu_thuong_ngay_do.mp3', 
+            video_file_path: null
+        },
+        {
+            id: 4,
+            title: 'Trót yêu',
+            duration: 285,
+            artist: 'Trung Quân',
+            genre_id: 1,
+            img_file_path: null,
+            audio_file_path: 'trot_yeu.mp3', 
+            video_file_path: null
+        },
+        {
+            id: 5,
+            title: 'Mortals',
+            duration: 285,
+            artist: 'TheFatRat',
+            genre_id: 1,
+            img_file_path: null,
+            audio_file_path: 'mortals.mp3', 
+            video_file_path: null
+        }
+    ]
+
+    function getTrackById(idTrack)
+    {
+        return tracks.find(item => item.id === idTrack) || null;
+    }
+
 
     useEffect(() => {
-        const track = {
-            track_id: "1",
-            track_name: "Yêu thương ngày đó",
-            track_artist: "Soobin Hoàng Sơn",
-            duration: 285,
-            audio_file_path: `${process.env.PUBLIC_URL}/assets/mp3/yeu_thuong_ngay_do.mp3`,
-        }
-        const playlist= [
+        if(trackInfo)
+        {
+            if(trackInfo.type === "track")
             {
-                track_id: "1",
-                track_name: "Nước mắt em lau bằng tình yêu mới 1",
-                track_artist: "Dalab, Tóc Tiên",
-                duration: 285,
-                audio_file_path: `${process.env.PUBLIC_URL}/assets/mp3/nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3`,
-            },
-            {
-                track_id: "2",
-                track_name: "Nước mắt em lau bằng tình yêu mới 2",
-                track_artist: "Dalab, Tóc Tiên",
-                duration: 285,
-                audio_file_path: `${process.env.PUBLIC_URL}/assets/mp3/nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3`,
-            },
-            {
-                track_id: "3",
-                track_name: "Nước mắt em lau bằng tình yêu mới 3",
-                track_artist: "Dalab, Tóc Tiên",
-                duration: 285,
-                audio_file_path: `${process.env.PUBLIC_URL}/assets/mp3/nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3`,
+                let track = getTrackById(trackInfo.id);
+                setCurrentTrack(track);
             }
-        ]
-        if(trackInfo.type === "track")
-        {
-            setCurrentTrack(track);
-
-        }
-        else if(trackInfo.type === "playlist")
-        {
-            setCurrentTrack(playlist[trackInfo.positionTrack]);
+            else if(trackInfo.type === "playlist")
+            {
+                // setCurrentTrack(playlist[trackInfo.positionTrack]);
+            }
         }
     }, [trackInfo]);
 
 
+
+
     useEffect(() => {
         if (audioRef.current) {
+            
             if (!isPlaying) {
                 audioRef.current.pause();
             } else {
@@ -72,6 +106,8 @@ function MediaControls() {
             }
         }
     }, [isPlaying]);
+
+    
 
 
     useEffect(() => {
@@ -85,6 +121,12 @@ function MediaControls() {
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${mins}:${secs.toString().padStart(2, "0")}`
+    };
+
+    const handleCanPlay = () => {
+        if (isPlaying && audioRef.current) {
+            audioRef.current.play();
+        }
     };
 
 
@@ -124,7 +166,7 @@ function MediaControls() {
                     <div className="MediaControls_track">
                         <div className="track-image">
                             <img 
-                                src={`${process.env.PUBLIC_URL}/default_music.png`}  
+                                src={`${process.env.PUBLIC_URL}/${currentTrack.img_file_path ? currentTrack.img_file_path : 'default_music.png'}`}
                                 style={{
                                     width: '100%',
                                     height: '100%',
@@ -141,10 +183,10 @@ function MediaControls() {
                                     color: 'white'
                                 }}
                             >
-                                {currentTrack.track_name}
+                                {currentTrack.title}
                             </a>
                             <span className="artist" style={{color: '#b3b3b3', fontSize: '13px'}}>
-                                {currentTrack.track_artist}
+                                {currentTrack.artist}
                             </span>
                         </div>
                         <Tooltip className="add-into-playlist" placement="top" title={"Lưu vào thư viện"}>
@@ -242,12 +284,13 @@ function MediaControls() {
             </div>
 
             {/** Thẻ audio để phát nhạc */}
-            {currentTrack && (
+            {currentTrack && currentTrack.audio_file_path && (
                 <audio 
                     ref={audioRef}
-                    src={currentTrack.audio_file_path}
+                    src={`${process.env.PUBLIC_URL}/assets/mp3/${currentTrack.audio_file_path}`}
                     onTimeUpdate={handleTimeUpdate}
-                    
+                    onCanPlay={handleCanPlay}
+                    // onEnded={setIsPlaying(false)}
                 />
             )}
         </div>
@@ -255,4 +298,5 @@ function MediaControls() {
 }
 
 export default MediaControls;
+
 
