@@ -1,3 +1,4 @@
+import { useTrack } from "../../../../Layouts/contexts/TrackProvider";
 import { useState } from 'react';
 import "./VideoList.css";
 import { PlayCircleFilled } from '@ant-design/icons';
@@ -6,6 +7,7 @@ import ModalVideo from "./ModalVideo";
 
 
 function VideoList() {
+    const { user, isModalOpen, setIsModalOpen } = useTrack();
     const [chucNang, setChucNang] = useState("");
     
 
@@ -19,7 +21,8 @@ function VideoList() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'dau_mua.mp3', 
-            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4'
+            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
+            isPremium: 1
         },
         {
             id: 2,
@@ -29,7 +32,8 @@ function VideoList() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3', 
-            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4'
+            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
+            isPremium: 1
         },
         {
             id: 3,
@@ -39,7 +43,8 @@ function VideoList() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'yeu_thuong_ngay_do.mp3', 
-            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4'
+            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
+            isPremium: 0
         },
         {
             id: 4,
@@ -49,7 +54,8 @@ function VideoList() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'trot_yeu.mp3', 
-            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4'
+            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
+            isPremium: 0
         },
         {
             id: 5,
@@ -59,7 +65,8 @@ function VideoList() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'mortal.mp3', 
-            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4'
+            video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
+            isPremium: 0
         }
     ]
 
@@ -73,13 +80,21 @@ function VideoList() {
                             <Tooltip className="play-btn" placement="top" title={`Phát ${item.title}`}>
                                 <PlayCircleFilled 
                                     onClick={() => {
-                                        setChucNang(
-                                            <ModalVideo
-                                                modalVisible={true}
-                                                setChucNang={setChucNang}
-                                                idVideo={item.id}
-                                            />
-                                        )
+                                        if (item.isPremium === 1 && user.isPremium === 0) 
+                                        {
+                                            setIsModalOpen(true)
+                                        } 
+                                        else 
+                                        {
+                                            setChucNang(
+                                                <ModalVideo
+                                                    modalVisible={true}
+                                                    setChucNang={setChucNang}
+                                                    idVideo={item.id}
+                                                />
+                                            )
+                                        }
+                                        
                                     }}
                                 />
                             </Tooltip>
@@ -96,9 +111,39 @@ function VideoList() {
                                 />
                             </div>
                             <div className="title">
-                                <span className="main-title" style={{color: 'white'}}>
+                                <span 
+                                    className="main-title" 
+                                    style={{
+                                        color: 'white',
+                                        whiteSpace: 'nowrap',
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        flex: 1,
+                                        minWidth: 0
+                                    }}
+                                >
                                     {item.title}
+                                    &nbsp;
                                 </span>
+                                {
+                                    item.isPremium === 1 ? 
+                                    <span
+                                        style={{
+                                            color: 'white',
+                                            fontSize: '8px',
+                                            fontWeight: '800',
+                                            backgroundColor: '#dca519',
+                                            padding: '3px 5px',
+                                            borderRadius: '8px',
+                                            whiteSpace: 'nowrap',
+                                            flexShrink: 0,
+                                            maxWidth: '50px'
+                                        }}
+                                    >
+                                        PREMIUM
+                                    </span>
+                                    : ""
+                                }
                                 <span className="sub-title" style={{color: '#b3b3b3', fontSize: '13px'}}>
                                     {item.artist}
                                 </span>

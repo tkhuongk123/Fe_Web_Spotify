@@ -42,7 +42,7 @@ function HomePage() {
 
                                             }}
                                         >
-                                            Ballad
+                                            {item.name}
                                         </Link>
                                         <Link 
                                             to={`/genre/${item.id}`}

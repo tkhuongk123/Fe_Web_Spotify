@@ -69,6 +69,16 @@ function MediaControls() {
             img_file_path: null,
             audio_file_path: 'mortals.mp3', 
             video_file_path: null
+        },
+        {
+            id: 6,
+            title: 'Đường lên phía trước',
+            duration: 285,
+            artist: 'Tiến Minh',
+            genre_id: 1,
+            img_file_path: null,
+            audio_file_path: 'duong_len_phia_truoc.mp3', 
+            video_file_path: null
         }
     ]
 
@@ -88,12 +98,16 @@ function MediaControls() {
             }
             else if(trackInfo.type === "playlist")
             {
-                // setCurrentTrack(playlist[trackInfo.positionTrack]);
+                let track = getTrackById(trackInfo.song_id);
+                setCurrentTrack(track);
+            }
+            else if(trackInfo.type === "favorite")
+            {
+                let track = getTrackById(trackInfo.song_id);
+                setCurrentTrack(track);
             }
         }
     }, [trackInfo]);
-
-
 
 
     useEffect(() => {
@@ -107,8 +121,16 @@ function MediaControls() {
         }
     }, [isPlaying]);
 
-    
+    useEffect(() => {
+        if (audioRef.current && currentTrack) {
+            audioRef.current.load();
+            if (isPlaying) {
+                audioRef.current.play();
+            }
+        }
+    }, [currentTrack]);
 
+    
 
     useEffect(() => {
         if (audioRef.current) {
@@ -154,9 +176,6 @@ function MediaControls() {
         }
     };
 
-    const changeTime = () => {
-        setCurrentTime(100);
-    };
 
 
     return (
@@ -191,7 +210,6 @@ function MediaControls() {
                         </div>
                         <Tooltip className="add-into-playlist" placement="top" title={"Lưu vào thư viện"}>
                             <PlusCircleOutlined 
-                                onClick={changeTime}
                             />
                         </Tooltip>
                     </div>
@@ -286,11 +304,11 @@ function MediaControls() {
             {/** Thẻ audio để phát nhạc */}
             {currentTrack && currentTrack.audio_file_path && (
                 <audio 
+                    key={currentTrack?.id}
                     ref={audioRef}
                     src={`${process.env.PUBLIC_URL}/assets/mp3/${currentTrack.audio_file_path}`}
                     onTimeUpdate={handleTimeUpdate}
                     onCanPlay={handleCanPlay}
-                    // onEnded={setIsPlaying(false)}
                 />
             )}
         </div>

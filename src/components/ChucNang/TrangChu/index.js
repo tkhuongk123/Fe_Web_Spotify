@@ -8,6 +8,8 @@ import FavoritePage from "./FavoritePage";
 import TrackPage from "./TrackPage";
 import GenrePage from "./GenrePage";
 import VideoPage from "./VideoPage";
+import SearchPage from "./SearchPage";
+import PreniumPage from "./PreniumPage";
 
 function TrangChu() {
     // Lấy toàn bộ đường dẫn
@@ -28,6 +30,10 @@ function TrangChu() {
                 return <GenrePage />
             case "video":
                 return <VideoPage />
+            case "search":
+                return <SearchPage />
+            case "prenium":
+                return <PreniumPage />
             default:
                 return <HomePage />
         }
