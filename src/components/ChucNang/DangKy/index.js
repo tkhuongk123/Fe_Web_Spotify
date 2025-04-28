@@ -1,30 +1,64 @@
 import validation from "../../../utils/validation";
-import { NotifyError, NotifyWarning } from "../../components/Toast";
+import { NotifyError, NotifyWarning, NotifySuccess } from "../../components/Toast";
 import "./DangKy.css";
-
 import { useNavigate } from "react-router-dom";
+import { registerAPI } from "../../../services/UserAPI";
 
 function DangKy() {
     const navigate = useNavigate();
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const tenDangNhapE = document.getElementById('tendangnhap');
+        const matKhauE = document.getElementById('matkhau');
+        const xacNhanMatKhauE = document.getElementById('xacnhanmatkhau');
+
+        if (validation(tenDangNhapE) && validation(matKhauE) && validation(xacNhanMatKhauE)) {
+            const username = tenDangNhapE.value.trim();
+            const password = matKhauE.value.trim();
+            const confirmPassword = xacNhanMatKhauE.value.trim();
+
+            if (password !== confirmPassword) {
+                NotifyError("Mật khẩu xác nhận không khớp");
+                return;
+            }
+
+            try {
+                const userData = {
+                    username,
+                    password,
+                    email: `${username}@example.com`,
+                    idquyen: 0 // Mặc định là user thường
+                };
+
+                const response = await registerAPI(userData);
+
+                if (response.success) {
+                    NotifySuccess("Đăng ký thành công");
+                    navigate("/signin");
+                } else {
+                    NotifyError(response.message || "Đăng ký thất bại");
+                }
+            } catch (error) {
+                NotifyError(error.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại.");
+            }
+        } else {
+            NotifyWarning('Vui lòng nhập thông tin đầy đủ');
+        }
+    };
 
     return (
         <div className="DangKy">
             <div className="DangKy_main">
                 <h2>Đăng ký</h2>
-                <form className="DangKy_form" onSubmit={(e) => {
-                    e.preventDefault();
-                }}>
+                <form className="DangKy_form" onSubmit={handleRegister}>
                     <input id="tendangnhap" type="text" placeholder="Tên đăng nhập"/>
                     <input id="matkhau" type="password" placeholder="Mật khẩu"/>
                     <input id="xacnhanmatkhau" type="password" placeholder="Xác Nhận Mật khẩu"/>
 
                     <div className="DangKy_option">
                         <div className="DangKy_option-dangKy">
-                            <span
-                                onClick={() => {
-                                    navigate("/");
-                                }}
-                            >
+                            <span onClick={() => navigate("/signin")}>
                                 Đăng nhập
                             </span>
                         </div>
@@ -34,7 +68,7 @@ function DangKy() {
                 </form> 
             </div>
         </div>
-    )
+    );
 }
 
-export default DangKy
+export default DangKy;
