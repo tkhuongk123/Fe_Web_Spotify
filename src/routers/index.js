@@ -10,14 +10,15 @@ import LoginLayout from "../components/Layouts/LoginLayout";
 import ClientLayout from "../components/Layouts/ClientLayout";
 import AdminLayout from "../components/Layouts/AdminLayout";
 
-const quanLyRoutes = [
-  // { path: '/quanly/taikhoan', component: QL_TaiKhoan, },
-  // { path: '/quanly/sanpham', component: QL_SanPham, },
+
+// Admin routes
+const adminRoutes = [
+  { path: "/admin/audio-music", component: QL_AudioMusic, layout: AdminLayout },
 ];
 
-// Public routes
-const publicRoutes = [
-  // Client routes
+
+// Client routes
+const clientRoutes = [
   { path: "/home", component: TrangChu, layout: ClientLayout },
   { path: "/playlist/:idPlaylist", component: TrangChu, layout: ClientLayout },
   { path: "/favorite/:idUser", component: TrangChu, layout: ClientLayout },
@@ -27,13 +28,12 @@ const publicRoutes = [
   { path: "/video", component: TrangChu, layout: ClientLayout },
   { path: "/prenium/:idUser", component: TrangChu, layout: ClientLayout },
   { path: "/user/:idUser", component: TrangChu, layout: ClientLayout },
+];
 
-  // Admin routes
-  { path: "/admin/audio-music", component: QL_AudioMusic, layout: AdminLayout },
-
-  // public routes
+// Public routes
+const publicRoutes = [
   { path: "/", component: Login, layout: LoginLayout },
   { path: "/signup", component: Signup, layout: LoginLayout },
 ];
 
-export { quanLyRoutes, publicRoutes };
+export { adminRoutes, clientRoutes, publicRoutes };

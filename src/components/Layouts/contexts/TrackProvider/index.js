@@ -11,14 +11,9 @@ export function TrackProvider({ children }) {
         return saved ? JSON.parse(saved) : {};
     });
     const [isPlaying, setIsPlaying] = useState(false);
-    const [user, setUser] = useState({
-        id: 1,
-        username: 'Trần Văn A',
-        image_file_path: null,
-        email: 'tranvana@gmail.com',
-        password: '123456',
-        profile_image_path: null,
-        is_premium: 0
+    const [user, setUser] = useState(() => {
+        const saved = localStorage.getItem("user");
+        return saved ? JSON.parse(saved) : {};
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
 

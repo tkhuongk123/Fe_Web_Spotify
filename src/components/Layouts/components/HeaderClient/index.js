@@ -16,16 +16,25 @@ function HeaderClient() {
 
     const items = [
         {
-          label: (
-            <a onClick={() => navigate(`/user/${user.id}`)}>
-                Hồ sơ
-            </a>
-          ),
-          key: '0',
+            label: (
+                <a onClick={() => navigate(`/user/${user.id}`)}>
+                    Hồ sơ
+                </a>
+            ),
+            key: '0',
         },
         {
-          label: 'Đăng xuất',
-          key: '1',
+            label: (
+                <a 
+                    onClick={() => {
+                        localStorage.removeItem('user');
+                        window.location.href = "/"
+                    }}
+                >
+                    Đăng xuất
+                </a>
+              ),
+            key: '1',
         },
     ];
 
