@@ -32,7 +32,7 @@ function SearchPage(props) {
             img_file_path: null,
             audio_file_path: "dau_mua.mp3",
             video_file_path: null,
-            isPremium: 1
+            is_premium: 1
         },
         {
             id: 2,
@@ -43,7 +43,7 @@ function SearchPage(props) {
             img_file_path: null,
             audio_file_path: "nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3",
             video_file_path: "nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4",
-            isPremium: 1
+            is_premium: 1
         },
         {
             id: 3,
@@ -54,7 +54,7 @@ function SearchPage(props) {
             img_file_path: null,
             audio_file_path: "yeu_thuong_ngay_do.mp3",
             video_file_path: null,
-            isPremium: 0
+            is_premium: 0
         },
         {
             id: 4,
@@ -65,7 +65,7 @@ function SearchPage(props) {
             img_file_path: null,
             audio_file_path: "trot_yeu.mp3",
             video_file_path: null,
-            isPremium: 0
+            is_premium: 0
         },
         {
             id: 5,
@@ -76,7 +76,18 @@ function SearchPage(props) {
             img_file_path: null,
             audio_file_path: "mortal.mp3",
             video_file_path: null,
-            isPremium: 0
+            is_premium: 0
+        },
+        {
+            id: 6,
+            title: "Đường lên phía trước",
+            duration: 285,
+            artist: "Tiến Minh",
+            genre_id: 2,
+            img_file_path: null,
+            audio_file_path: "duong_len_phia_truoc.mp3",
+            video_file_path: null,
+            is_premium: 0
         },
         
     ];
@@ -152,7 +163,7 @@ function SearchPage(props) {
                                                         }}
                                                         onClick={() => {
                                                            
-                                                            if (item.isPremium === 1 && user.isPremium === 0) 
+                                                            if (item.is_premium === 1 && user.is_premium === 0) 
                                                             {
                                                                 setIsModalOpen(true)
                                                             } 
@@ -187,8 +198,8 @@ function SearchPage(props) {
                                                 </div>
                                                 <div className="title">
                                                     <div style={{display: 'flex'}}>
-
                                                         <Link 
+                                                            to={`/track/${item.id}`}
                                                             className="main-title" 
                                                             style={{
                                                                 color: `${(trackInfo.id == item.id && trackInfo.type === "track") ? '#1ed35e' : 'white'}`,
@@ -199,7 +210,7 @@ function SearchPage(props) {
                                                             &nbsp;
                                                         </Link>
                                                         {
-                                                            item.isPremium === 1 ? 
+                                                            item.is_premium === 1 ? 
                                                             <span
                                                                 style={{
                                                                     color: 'white',
@@ -273,7 +284,7 @@ function SearchPage(props) {
                                     <Tooltip className="play-btn" placement="top" title={`Phát ${item.title}`}>
                                         <PlayCircleFilled 
                                             onClick={() => {
-                                                if (item.isPremium === 1 && user.isPremium === 0) 
+                                                if (item.is_premium === 1 && user.is_premium === 0) 
                                                 {
                                                     setIsModalOpen(true)
                                                 } 
@@ -318,7 +329,7 @@ function SearchPage(props) {
                                             &nbsp;
                                         </span>
                                         {
-                                            item.isPremium === 1 ? 
+                                            item.is_premium === 1 ? 
                                             <span
                                                 style={{
                                                     color: 'white',

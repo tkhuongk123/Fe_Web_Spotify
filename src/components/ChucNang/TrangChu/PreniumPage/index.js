@@ -21,7 +21,7 @@ function PreniumPage(props) {
             email: 'tranvana@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 2,
@@ -30,7 +30,7 @@ function PreniumPage(props) {
             email: 'tranvanb@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 3,
@@ -39,7 +39,7 @@ function PreniumPage(props) {
             email: 'tranvanc@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
     ]
 

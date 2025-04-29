@@ -22,7 +22,7 @@ function VideoList() {
             img_file_path: null,
             audio_file_path: 'dau_mua.mp3', 
             video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
-            isPremium: 1
+            is_premium: 1
         },
         {
             id: 2,
@@ -33,7 +33,7 @@ function VideoList() {
             img_file_path: null,
             audio_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3', 
             video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
-            isPremium: 1
+            is_premium: 1
         },
         {
             id: 3,
@@ -44,7 +44,7 @@ function VideoList() {
             img_file_path: null,
             audio_file_path: 'yeu_thuong_ngay_do.mp3', 
             video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
-            isPremium: 0
+            is_premium: 0
         },
         {
             id: 4,
@@ -55,7 +55,7 @@ function VideoList() {
             img_file_path: null,
             audio_file_path: 'trot_yeu.mp3', 
             video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
-            isPremium: 0
+            is_premium: 0
         },
         {
             id: 5,
@@ -66,7 +66,7 @@ function VideoList() {
             img_file_path: null,
             audio_file_path: 'mortal.mp3', 
             video_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4',
-            isPremium: 0
+            is_premium: 0
         }
     ]
 
@@ -80,7 +80,7 @@ function VideoList() {
                             <Tooltip className="play-btn" placement="top" title={`Phát ${item.title}`}>
                                 <PlayCircleFilled 
                                     onClick={() => {
-                                        if (item.isPremium === 1 && user.isPremium === 0) 
+                                        if (item.is_premium === 1 && user.is_premium === 0) 
                                         {
                                             setIsModalOpen(true)
                                         } 
@@ -126,7 +126,7 @@ function VideoList() {
                                     &nbsp;
                                 </span>
                                 {
-                                    item.isPremium === 1 ? 
+                                    item.is_premium === 1 ? 
                                     <span
                                         style={{
                                             color: 'white',

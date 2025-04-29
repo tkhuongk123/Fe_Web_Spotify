@@ -1,37 +1,33 @@
+import { useTrack } from "../../contexts/TrackProvider";
 import "./HeaderClient.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { SpotifyOutlined, HomeFilled, ShopFilled, ToolFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Tooltip, Input, Dropdown } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-const items = [
-    {
-      label: (
-        <a href="https://www.antgroup.com" target="_blank" rel="noopener noreferrer">
-          1st menu item
-        </a>
-      ),
-      key: '0',
-    },
-    {
-      label: (
-        <a href="https://www.aliyun.com" target="_blank" rel="noopener noreferrer">
-          2nd menu item
-        </a>
-      ),
-      key: '1',
-    },
-    {
-      label: '3rd menu item',
-      key: '2',
-    },
-];
+
 
 
 function HeaderClient() {
     const navigate = useNavigate();
+    const { user } = useTrack();
     const [searchValue, setSearchValue] = useState('');
+
+    const items = [
+        {
+          label: (
+            <a onClick={() => navigate(`/user/${user.id}`)}>
+                Hồ sơ
+            </a>
+          ),
+          key: '0',
+        },
+        {
+          label: 'Đăng xuất',
+          key: '1',
+        },
+    ];
 
     const handleSearch = () => {
         if (searchValue.trim() !== '') {
@@ -62,7 +58,7 @@ function HeaderClient() {
                         <div className="icon-container">
                             <HomeFilled
                                 onClick={() => {
-                                    navigate("/");
+                                    navigate("/home");
                                 }}
                             />
                         </div>
@@ -99,8 +95,8 @@ function HeaderClient() {
                     <button onClick={() => navigate(`/prenium/${1}`)}>Khám phá Premium</button>
                 </div>
                 <Dropdown menu={{ items }} trigger={['click']}>
-                    <Tooltip className="user-wrapper" placement="bottom" title={"Khuong Tran"}>
-                        <span>K</span>
+                    <Tooltip className="user-wrapper" placement="bottom" title={user.username}>
+                        <span>{user.username.charAt(0).toUpperCase()}</span>
                     </Tooltip>
                 </Dropdown>
             </div>

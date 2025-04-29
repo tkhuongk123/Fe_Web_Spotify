@@ -4,22 +4,26 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import "./PlaylistPage.css";
 import { PlayCircleFilled, PlusCircleOutlined, CloseCircleOutlined,
     ClockCircleOutlined, CaretRightFilled, SearchOutlined,
-    CloseOutlined, CheckCircleFilled, PlusOutlined
+    CloseOutlined, CheckCircleFilled, PlusOutlined,
+    LoadingOutlined, 
 
 } from '@ant-design/icons';
-import { Input, Tooltip, Popconfirm, Table, message } from "antd";
+import { Input, Tooltip, Popconfirm, Table, message, Flex, Upload, Modal, Button } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
 
 function PlaylistPage() {
     const navigate = useNavigate();
-    const { trackInfo, setTrackInfo, isPlaying, setIsPlaying} = useTrack();
+    const { trackInfo, setTrackInfo, isPlaying, setIsPlaying, user, isModalOpen, setIsModalOpen} = useTrack();
     const { idPlaylist } = useParams();
+    const [imageUrl, setImageUrl] = useState();
+    const [editModal, setEditModal] = useState(false);
     const [playlist, setPlaylist ] = useState({});
     const [playlistSongs, setPlaylistSongs ] = useState([]);
     const [isOpenFind, setIsOpenFind] = useState(false);
     const [findTrack, setFindTrack ] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState("");
+    const [nameKeyword, setNameKeyword] = useState("");
 
     // Mock Data
     const users = [
@@ -30,7 +34,7 @@ function PlaylistPage() {
             email: 'tranvana@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 2,
@@ -39,7 +43,7 @@ function PlaylistPage() {
             email: 'tranvanb@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 3,
@@ -48,7 +52,7 @@ function PlaylistPage() {
             email: 'tranvanc@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
     ]
 
@@ -82,7 +86,8 @@ function PlaylistPage() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'dau_mua.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 0
         },
         {
             id: 2,
@@ -92,7 +97,8 @@ function PlaylistPage() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 1
         },
         {
             id: 3,
@@ -102,7 +108,8 @@ function PlaylistPage() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'yeu_thuong_ngay_do.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 0
         },
         {
             id: 4,
@@ -112,7 +119,8 @@ function PlaylistPage() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'trot_yeu.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 0
         },
         {
             id: 5,
@@ -122,7 +130,8 @@ function PlaylistPage() {
             genre_id: 2,
             img_file_path: null,
             audio_file_path: 'mortal.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 0
         }
     ]
 
@@ -135,7 +144,8 @@ function PlaylistPage() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'dau_mua.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 0
         },
         {
             id: 3,
@@ -145,7 +155,8 @@ function PlaylistPage() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'yeu_thuong_ngay_do.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 0
         },
         {
             id: 4,
@@ -155,9 +166,11 @@ function PlaylistPage() {
             genre_id: 1,
             img_file_path: null,
             audio_file_path: 'trot_yeu.mp3', 
-            video_file_path: null
+            video_file_path: null,
+            is_premium: 0
         },
     ];
+
 
     useEffect(() => {
         setPlaylistSongs(listSongs);
@@ -166,7 +179,7 @@ function PlaylistPage() {
     useEffect(() => {
         const playlist = getPlaylistById(idPlaylist);
         setPlaylist(playlist);
-    }, []);
+    }, [idPlaylist]);
 
     useEffect(() => {
         const keyword = searchKeyword.trim().toLowerCase();
@@ -216,7 +229,6 @@ function PlaylistPage() {
 
     function removePlaylist(idPlaylist, index)
     {
-
         navigate("/");
     }
 
@@ -236,13 +248,44 @@ function PlaylistPage() {
         return `${mins}:${secs.toString().padStart(2, "0")}`
     };
 
+    const handleCancel = () => {
+        setEditModal(false);
+        
+    };
+
+    const getBase64 = (img, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    };
+
+    const beforeUpload = (file) => {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('You can only upload JPG/PNG file!');
+            return Upload.LIST_IGNORE;
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            message.error('Image must smaller than 2MB!');
+            return Upload.LIST_IGNORE;
+        }
+        getBase64(file, (url) => {
+            setImageUrl(url);
+        });
+        return false;
+    };
+
 
     return (
         <div className="PlaylistPage">
             <div className="playlist_header">
-                <div className="playlist-img">
+                <div 
+                    className="playlist-img"
+                    onClick={() => setEditModal(true)}
+                >
                     <img 
-                        src={`${process.env.PUBLIC_URL}/${playlist?.img_file_path || 'default_music.png'}`}
+                        src={`${process.env.PUBLIC_URL}/default_music.png`} 
                         style={{
                             width: '100%',
                             height: '100%',
@@ -251,9 +294,15 @@ function PlaylistPage() {
                         }}
                     />
                 </div>
+                
                 <div className="playlist-info">
                     <span className="type">Playlist</span>
-                    <span className="name">{playlist?.name || ""}</span>
+                    <span 
+                        className="name"
+                        onClick={() => setEditModal(true)}
+                    >
+                        {playlist?.name || ""}
+                    </span>
                     <span className="sub-info">
                         <a className="user">{getUserNameById(playlist?.user_id || "") || ""}</a> 
                         &nbsp;
@@ -319,7 +368,7 @@ function PlaylistPage() {
                                         <tr>
                                             <td class="number-col">
                                                 {
-                                                    (isPlaying === true && (trackInfo.song_id === item.id && trackInfo.type === "playlist")) ? 
+                                                    (isPlaying === true && (trackInfo.song_id === item.id && trackInfo.id === idPlaylist && trackInfo.type === "playlist")) ? 
                                                     <FontAwesomeIcon 
                                                         icon={faMusic} 
                                                         beat
@@ -366,7 +415,7 @@ function PlaylistPage() {
                                                             to={`/track/${item.id}`}
                                                             className="main-title" 
                                                             style={{
-                                                                color: `${(trackInfo.song_id == item.id && trackInfo.type === "playlist") ? '#1ed35e' : 'white'}`
+                                                                color: `${(trackInfo.song_id == item.id && trackInfo.id === idPlaylist && trackInfo.type === "playlist") ? '#1ed35e' : 'white'}`
                                                             }}
                                                         >
                                                             {item.title}
@@ -465,14 +514,35 @@ function PlaylistPage() {
                                                                     />
                                                                 </div>
                                                                 <div className="title">
-                                                                    <a 
-                                                                        className="main-title" 
-                                                                        style={{
-                                                                            color: 'white'
-                                                                        }}
-                                                                    >
-                                                                        {item.title}
-                                                                    </a>
+                                                                    <div>
+                                                                        <Link 
+                                                                            className="main-title" 
+                                                                            style={{
+                                                                                color: 'white'
+                                                                            }}
+                                                                        >
+                                                                            {item.title}
+                                                                            &nbsp;
+                                                                        </Link>
+                                                                        {
+                                                                            item.is_premium === 1 ? 
+                                                                            <span
+                                                                                style={{
+                                                                                    color: 'white',
+                                                                                    fontSize: '8px',
+                                                                                    fontWeight: '800',
+                                                                                    backgroundColor: '#dca519',
+                                                                                    padding: '3px 5px',
+                                                                                    borderRadius: '8px',
+                                                                                    maxWidth: '50px',
+                                                                                    verticalAlign: 'middle'
+                                                                                }}
+                                                                            >
+                                                                                PREMIUM
+                                                                            </span>
+                                                                            : ""
+                                                                        }
+                                                                    </div>
                                                                     <span className="sub-title" style={{color: '#b3b3b3', fontSize: '13px'}}>
                                                                         {item.artist}
                                                                     </span>
@@ -488,7 +558,17 @@ function PlaylistPage() {
                                                                         title={"Thêm vào danh sách này"}
                                                                     >
                                                                         <PlusCircleOutlined 
-                                                                            onClick={() => addIntoPlaylist(idPlaylist, item.id)}                                                                        
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                if (item.is_premium === 1 && user.is_premium === 0) 
+                                                                                {
+                                                                                    setIsModalOpen(true)
+                                                                                } 
+                                                                                else 
+                                                                                {
+                                                                                    addIntoPlaylist(idPlaylist, item.id)
+                                                                                }
+                                                                            }}                                                                        
                                                                         />
                                                                     </Tooltip> 
                                                                     :
@@ -520,7 +600,65 @@ function PlaylistPage() {
                     )}
                 </div>
             </div>
-
+            <Modal 
+                className="modal-edit-playlist"
+                title={"Sửa thông tin chi tiết"} 
+                open={editModal} 
+                onCancel={handleCancel} 
+                width={600}
+                centered
+                footer={[
+                    <Button 
+                        key="submit" 
+                        type="primary" 
+                        onClick={handleCancel}
+                        style={{
+                            backgroundColor: 'white',
+                            color: '#000',
+                            fontWeight: 'bold',
+                            fontSize: '15px',
+                            padding: '25px 30px',
+                            borderRadius: '35px'
+                        }}
+                    >
+                        Lưu
+                    </Button>,
+                ]}
+                
+            >
+                <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+                    <Upload 
+                        className="imgEdit"
+                        beforeUpload={beforeUpload}
+                        showUploadList={false}
+                    >
+                        <img 
+                            src={imageUrl ? imageUrl : `${process.env.PUBLIC_URL}/${playlist?.img_file_path || 'default_music.png'}`}  
+                            style={{ 
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                borderRadius: '5px'
+                            }} 
+                        />       
+                    </Upload>
+                    <Input
+                        
+                        value={nameKeyword ? nameKeyword : playlist.name}
+                        onChange={(e) => 
+                            setNameKeyword(e.target.value)
+                        }
+                        
+                        style={{
+                            background: '#383838',
+                            border: '1px solid transparent',
+                            color: 'white',
+                            alignSelf: 'flex-start',
+                            width: '320px', 
+                        }}
+                    />
+                </div>
+            </Modal>
         </div>
     )
 }

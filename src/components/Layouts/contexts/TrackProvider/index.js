@@ -8,12 +8,9 @@ const TrackContext = createContext();
 export function TrackProvider({ children }) {
     const [trackInfo, setTrackInfo] = useState(() => {
         const saved = localStorage.getItem("trackInfo");
-        console.log(">>> trackInfo: ", JSON.parse(saved))
         return saved ? JSON.parse(saved) : {};
     });
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isClick, setIsClick] = useState(null);
-    const [isClickPlaylist, setIsClickPlaylist] = useState({});
     const [user, setUser] = useState({
         id: 1,
         username: 'Trần Văn A',
@@ -21,7 +18,7 @@ export function TrackProvider({ children }) {
         email: 'tranvana@gmail.com',
         password: '123456',
         profile_image_path: null,
-        isPremium: 0
+        is_premium: 0
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,8 +36,6 @@ export function TrackProvider({ children }) {
             value={{ 
                 trackInfo ,setTrackInfo, 
                 isPlaying, setIsPlaying, 
-                isClick, setIsClick,
-                isClickPlaylist, setIsClickPlaylist,
                 user, setUser,
                 isModalOpen, setIsModalOpen
             }}

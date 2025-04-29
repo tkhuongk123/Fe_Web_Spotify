@@ -36,7 +36,7 @@ function GenrePage(props) {
             img_file_path: null,
             audio_file_path: 'dau_mua.mp3', 
             video_file_path: null,
-            isPrenium: 1
+            is_premium: 1
         },
         {
             id: 2,
@@ -47,7 +47,7 @@ function GenrePage(props) {
             img_file_path: null,
             audio_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3', 
             video_file_path: null,
-            isPrenium: 1
+            is_premium: 1
         },
         {
             id: 3,
@@ -58,7 +58,7 @@ function GenrePage(props) {
             img_file_path: null,
             audio_file_path: 'yeu_thuong_ngay_do.mp3', 
             video_file_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 4,
@@ -69,7 +69,7 @@ function GenrePage(props) {
             img_file_path: null,
             audio_file_path: 'trot_yeu.mp3', 
             video_file_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 5,
@@ -80,7 +80,7 @@ function GenrePage(props) {
             img_file_path: null,
             audio_file_path: 'mortal.mp3', 
             video_file_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 6,
@@ -91,7 +91,7 @@ function GenrePage(props) {
             img_file_path: null,
             audio_file_path: 'duong_len_phia_truoc.mp3', 
             video_file_path: null,
-            isPrenium: 0
+            is_premium: 0
         }
     ]
 
@@ -134,7 +134,7 @@ function GenrePage(props) {
                                     <PlayCircleFilled 
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            if (item.isPrenium === 1 && user.isPremium === 0) 
+                                            if (item.is_premium === 1 && user.is_premium === 0) 
                                             {
                                                 setIsModalOpen(true)
                                             } 
@@ -177,7 +177,7 @@ function GenrePage(props) {
                                         &nbsp;
                                     </span>
                                     {
-                                        item.isPrenium === 1 ? 
+                                        item.is_premium === 1 ? 
                                         <span
                                             style={{
                                                 color: 'white',

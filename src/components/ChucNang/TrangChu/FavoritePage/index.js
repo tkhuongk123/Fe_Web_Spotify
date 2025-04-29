@@ -26,7 +26,7 @@ function FavoritePage() {
             email: 'tranvana@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 2,
@@ -35,7 +35,7 @@ function FavoritePage() {
             email: 'tranvanb@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 3,
@@ -44,7 +44,7 @@ function FavoritePage() {
             email: 'tranvanc@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
     ]
 
@@ -231,7 +231,7 @@ function FavoritePage() {
                                         <tr>
                                             <td class="number-col">
                                                 {
-                                                    (isPlaying === true && (trackInfo.song_id === item.id && trackInfo.type === "favorite")) ? 
+                                                    (isPlaying === true && (trackInfo.song_id === item.id && trackInfo.id === idUser && trackInfo.type === "favorite")) ? 
                                                     <FontAwesomeIcon 
                                                         icon={faMusic} 
                                                         beat

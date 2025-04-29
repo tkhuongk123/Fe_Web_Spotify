@@ -24,7 +24,7 @@ function Playlists() {
             email: 'tranvana@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 2,
@@ -33,7 +33,7 @@ function Playlists() {
             email: 'tranvanb@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
         {
             id: 3,
@@ -42,7 +42,7 @@ function Playlists() {
             email: 'tranvanc@gmail.com',
             password: '123456',
             profile_image_path: null,
-            isPrenium: 0
+            is_premium: 0
         },
     ]
 
