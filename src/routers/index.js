@@ -21,7 +21,7 @@ const adminRoutes = [
 const clientRoutes = [
   { path: "/home", component: TrangChu, layout: ClientLayout },
   { path: "/playlist/:idPlaylist", component: TrangChu, layout: ClientLayout },
-  { path: "/favorite/:idUser", component: TrangChu, layout: ClientLayout },
+  { path: "/favorite/:idFavorite", component: TrangChu, layout: ClientLayout },
   { path: "/track/:idTrack", component: TrangChu, layout: ClientLayout },
   { path: "/genre/:idGenre", component: TrangChu, layout: ClientLayout },
   { path: "/search/:nameTrack", component: TrangChu, layout: ClientLayout },

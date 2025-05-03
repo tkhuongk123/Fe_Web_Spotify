@@ -6,6 +6,7 @@ import { PlayCircleFilled, CloseCircleOutlined,
     ClockCircleOutlined, CaretRightFilled, PlusCircleOutlined
 } from '@ant-design/icons';
 import { Tooltip, Popconfirm } from "antd";
+import { getTrackByIdAPI } from "../../../../services/TrackAPI";
 
 function TrackPage() {
     const [track, setTrack ] = useState([]);
@@ -13,73 +14,21 @@ function TrackPage() {
     const { idTrack } = useParams();
 
     // Mock Data
-    const tracks = [
-        {
-            id: 1,
-            title: 'Dấu mưa',
-            duration: 285,
-            artist: 'Trung Quân',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'dau_mua.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 2,
-            title: 'Nước mắt em lau bằng tình yêu mới',
-            duration: 285,
-            artist: 'Dalab',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3', 
-            video_file_path: null,
-            is_premium: 1
-        },
-        {
-            id: 3,
-            title: 'Yêu thương ngày đó',
-            duration: 285,
-            artist: 'Soobin Hoàng Sơn',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'yeu_thuong_ngay_do.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 4,
-            title: 'Trót yêu',
-            duration: 285,
-            artist: 'Trung Quân',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'trot_yeu.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 5,
-            title: 'Mortals',
-            duration: 285,
-            artist: 'TheFatRat',
-            genre_id: 2,
-            img_file_path: null,
-            audio_file_path: 'mortal.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        }
-    ]
 
     useEffect(() => {
-        const track = getTrackById(idTrack);
-        setTrack(track);
+        ( async () => {
+            const dataTrack = await getTrackByIdAPI(idTrack);
+            if(dataTrack.track)
+            {
+                setTrack(dataTrack.track);
+            }
+            else
+            {
+                console.log(dataTrack.error);
+            }
+        })();
     }, []);
 
-    function getTrackById(idTrack)
-    {
-        return tracks.find(item => item.id == idTrack);
-    }
 
     const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
@@ -93,7 +42,7 @@ function TrackPage() {
             <div className="track_header">
                 <div className="track-img">
                     <img 
-                        src={`${process.env.PUBLIC_URL}/${track?.img_file_path || 'default_music.png'}`}
+                        src={`${process.env.PUBLIC_URL}/assets/images/${track?.image_file_path || 'default_music.png'}`}
                         style={{
                             width: '100%',
                             height: '100%',

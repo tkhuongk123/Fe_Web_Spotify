@@ -2,115 +2,46 @@ import { useTrack } from "../../../Layouts/contexts/TrackProvider";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  PlayCircleFilled,
-  CloseCircleOutlined,
-  ClockCircleOutlined,
-  CaretRightFilled,
-  PlusCircleOutlined
+  PlayCircleFilled, CheckCircleFilled,
+  CloseCircleOutlined, ClockCircleOutlined,
+  CaretRightFilled, PlusCircleOutlined
 } from "@ant-design/icons";
-import { Tooltip, Popconfirm } from "antd";
+import { Tooltip, Popconfirm, message } from "antd";
 import "./SearchPage.css";
 import ModalVideo from "./ModalVideo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
+import { getTracksAPI } from "../../../../services/TrackAPI";
+import { getFavoriteByIdUserAPI } from "../../../../services/FavoriteAPI";
+import { createFavoriteTrackAPI, getFavoriteTracksAPI } from "../../../../services/FavoriteTrackAPI";
+
 
 function SearchPage(props) {
-  const { trackInfo, setTrackInfo, isPlaying, setIsPlaying, user, isModalOpen, setIsModalOpen} = useTrack();
-  const [ searchTrack, setSearchTrack ] = useState([]);
-  const [ searchVideo, setSearchVideo ] = useState([]);
-  const [chucNang, setChucNang] = useState("");
-  const { nameTrack } = useParams();
-
-    // Mock database
-    const tracks = [
-        {
-            id: 1,
-            title: "Dấu mưa",
-            duration: 285,
-            artist: "Trung Quân",
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: "dau_mua.mp3",
-            video_file_path: null,
-            is_premium: 1
-        },
-        {
-            id: 2,
-            title: "Nước mắt em lau bằng tình yêu mới",
-            duration: 285,
-            artist: "Dalab",
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: "nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3",
-            video_file_path: "nuoc_mat_em_lau_bang_tinh_yeu_moi.mp4",
-            is_premium: 1
-        },
-        {
-            id: 3,
-            title: "Yêu thương ngày đó",
-            duration: 285,
-            artist: "Soobin Hoàng Sơn",
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: "yeu_thuong_ngay_do.mp3",
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 4,
-            title: "Trót yêu",
-            duration: 285,
-            artist: "Trung Quân",
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: "trot_yeu.mp3",
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 5,
-            title: "Mortals",
-            duration: 285,
-            artist: "TheFatRat",
-            genre_id: 2,
-            img_file_path: null,
-            audio_file_path: "mortal.mp3",
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 6,
-            title: "Đường lên phía trước",
-            duration: 285,
-            artist: "Tiến Minh",
-            genre_id: 2,
-            img_file_path: null,
-            audio_file_path: "duong_len_phia_truoc.mp3",
-            video_file_path: null,
-            is_premium: 0
-        },
-        
-    ];
-
-    const formatTime = (seconds) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs.toString().padStart(2, "0")}`
-    };
-
-    function getTrackByName(nameTrack) {
-        return tracks.filter((item) =>
-            item.title.toLowerCase().includes(nameTrack.toLowerCase())
-        ) || [];
-    } 
-
-    function getVideoByName(nameTrack) {
-        return tracks.filter((item) =>
-            item.title.toLowerCase().includes(nameTrack.toLowerCase()) 
-            && item.video_file_path
-        ) || [];
-    } 
+    const { trackInfo, setTrackInfo, isPlaying, setIsPlaying, user, isModalOpen, setIsModalOpen} = useTrack();
+    const [ searchTrack, setSearchTrack ] = useState([]);
+    const [ searchVideo, setSearchVideo ] = useState([]);
+    const [chucNang, setChucNang] = useState("");
+    const { nameTrack } = useParams();
+    const [tracks, setTracks] = useState([]);
+    const [favoriteTracks, setFavoriteTracks] = useState([]);
     
+    // Mock database
+    useEffect(() => {
+        ( async () => { 
+            const dataTracks =  await getTracksAPI();
+            const dataFavorite = await getFavoriteByIdUserAPI(user.id);
+            const favoriteSongs = await getFavoriteTracksAPI(dataFavorite.favorite.id);
+            setFavoriteTracks(favoriteSongs.favorite_tracks);
+            if(dataTracks.tracks)
+            {
+                setTracks(dataTracks.tracks);
+            }
+            else
+            {
+                console.log(dataTracks.error);
+            }
+        })();
+    }, []);
 
     useEffect(() => {
         let listSearchTrack = getTrackByName(nameTrack);
@@ -124,6 +55,50 @@ function SearchPage(props) {
             setSearchVideo(listSearchVideo);
         }
     }, [nameTrack]);
+
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, "0")}`
+    };
+
+    function removeVietnameseTones(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function getTrackByName(nameTrack) {
+        const nameTrackNoTones = removeVietnameseTones(nameTrack.toLowerCase());
+        return tracks.filter((item) =>
+            removeVietnameseTones(item.title.toLowerCase()).includes(nameTrackNoTones)
+        ) || [];
+    } 
+
+    function getVideoByName(nameTrack) {
+        const nameTrackNoTones = removeVietnameseTones(nameTrack.toLowerCase());
+        return tracks.filter((item) =>
+            removeVietnameseTones(item.title.toLowerCase()).includes(nameTrackNoTones) && item.video_file_path
+        ) || [];
+    } 
+
+    const addIntoFavorite = async (idTrack) => {
+        const dataFavorite = await getFavoriteByIdUserAPI(user.id);
+        const dataCreateFavoriteTrack = await createFavoriteTrackAPI(dataFavorite.favorite.id, idTrack);
+        if(dataCreateFavoriteTrack.success)
+        {
+            message.success('Đã thêm bài hát vào favorite thành công!');
+        }
+    }
+
+    const checkTrackInFavorite = (idTrack) => {
+        if(favoriteTracks)
+        {
+            return favoriteTracks.some(song => song.id === idTrack);
+        }
+        return false;
+    };
+
+
+    
 
     return (
         <>
@@ -187,7 +162,7 @@ function SearchPage(props) {
                                             <div className="track">
                                                 <div className="image">
                                                 <img
-                                                    src={`${process.env.PUBLIC_URL}/${item.img_file_path ? item.img_file_path : 'default_music.png'}`} 
+                                                    src={`${process.env.PUBLIC_URL}/assets/images/${item.image_file_path ? item.image_file_path : 'default_music.png'}`} 
                                                     style={{
                                                         width: "100%",
                                                         height: "100%",
@@ -236,11 +211,28 @@ function SearchPage(props) {
                                             </div>
                                         </td>
                                         <td class="add-playlist-col">
-                                            <Tooltip className="add-into-playlist" placement="top" title={"Lưu vào thư viện"}>
-                                                <PlusCircleOutlined 
-                                                    
-                                                />
-                                            </Tooltip>
+                                        {
+                                            (!checkTrackInFavorite(item.id) ?
+                                                <Tooltip className="add-into-playlist" placement="top" title={"Lưu vào thư viện"}>
+                                                    <PlusCircleOutlined 
+                                                        onClick={() => addIntoFavorite(item.id)}
+                                                    />
+                                                </Tooltip>
+                                                :
+                                                <Tooltip 
+                                                    className="find-tracks-add-btn" 
+                                                    placement="top" 
+                                                    title={"Đã thêm vào danh sách này"}
+                                                                                                                        
+                                                >
+                                                    <CheckCircleFilled 
+                                                        style={{
+                                                            color: '#1ed35e'
+                                                        }}
+                                                    />
+                                                </Tooltip>
+                                            )
+                                        }
                                         </td>
                                         <td class="duration-col">
                                             {formatTime(item.duration)}
@@ -303,7 +295,7 @@ function SearchPage(props) {
                                     </Tooltip>
                                     <div className="image">
                                         <img 
-                                            src={`${process.env.PUBLIC_URL}/${item.img_file_path ? item.img_file_path : 'default_music.png'}`}  
+                                            src={`${process.env.PUBLIC_URL}/assets/images/${item.image_file_path ? item.image_file_path : 'default_music.png'}`} 
                                             style={{
                                                 width: '100%',
                                                 height: '100%',

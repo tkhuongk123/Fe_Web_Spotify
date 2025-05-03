@@ -17,9 +17,9 @@ function DangNhap() {
             const data = await loginAPI(username, password);
             if(data.user) {
                 localStorage.setItem('user', JSON.stringify(data.user))
-                if(data.user.role === false) {
+                if(data.user.role === 0) {
                     window.location.href = "/home"
-                } else if(data.user.role === true) {
+                } else if(data.user.role === 1) {
                     window.location.href = "/admin/audio-music"
                 } else {
                     window.location.href = "/"

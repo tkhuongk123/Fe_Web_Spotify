@@ -22,7 +22,7 @@ function UserPage() {
             <div className="user_header">
                 <div className="user-img">
                     <img 
-                        src={`${process.env.PUBLIC_URL}/${user?.profile_image_path || 'default_music.png'}`}
+                        src={`${process.env.PUBLIC_URL}/assets/images/${user?.profile_image_path || 'default_music.png'}`}
                         style={{
                             width: '100%',
                             height: '100%',

@@ -49,7 +49,7 @@ function App() {
       </Router>
     )
   }
-  else if (user.role === false) {
+  else if (user.role === 0) {
     return (
       <Router>
         <div className="App">
@@ -83,7 +83,7 @@ function App() {
       </Router>
     )
   }
-  else if (user.role === true) {
+  else if (user.role === 1) {
     return (
       <Router>
         <div className="App">

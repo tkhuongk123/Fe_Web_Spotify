@@ -134,7 +134,18 @@ export const updateProfileAPI = async (token, userId, profileData) => {
 };
 
 // Cập nhật trạng thái premium
-export const updatePremiumStatusAPI = async (token, userId, status) => {
+export const updatePremiumStatusAPI = async (userId, status) => {
+  try {
+    const response = await axios.post(`${api}/api/users/${userId}/update_premium_status/`, {
+      is_premium: status
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/*export const updatePremiumStatusAPI = async (token, userId, status) => {
   try {
     const response = await axios.put(`${api}/api/users/${userId}/update_premium_status/`, {
       is_premium: status
@@ -147,7 +158,7 @@ export const updatePremiumStatusAPI = async (token, userId, status) => {
   } catch (error) {
     throw error;
   }
-};
+};*/
 
 // Cập nhật ảnh đại diện
 export const updateProfileImageAPI = async (token, userId, imageFile) => {
