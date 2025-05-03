@@ -6,6 +6,11 @@ import HomePage from "./HomePage";
 import PlaylistPage from "./PlaylistPage";
 import FavoritePage from "./FavoritePage";
 import TrackPage from "./TrackPage";
+import GenrePage from "./GenrePage";
+import VideoPage from "./VideoPage";
+import SearchPage from "./SearchPage";
+import PreniumPage from "./PreniumPage";
+import UserPage from "./UserPage";
 
 function TrangChu() {
     // Lấy toàn bộ đường dẫn
@@ -22,6 +27,16 @@ function TrangChu() {
                 return <FavoritePage />
             case "track":
                 return <TrackPage />
+            case "genre":
+                return <GenrePage />
+            case "video":
+                return <VideoPage />
+            case "search":
+                return <SearchPage />
+            case "prenium":
+                return <PreniumPage />
+            case "user":
+                return <UserPage />
             default:
                 return <HomePage />
         }

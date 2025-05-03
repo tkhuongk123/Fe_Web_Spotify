@@ -27,6 +27,7 @@ function DangKy() {
                 const userData = {
                     username,
                     password,
+                    confirm_password: confirmPassword,
                     email: `${username}@example.com`,
                     idquyen: 0 // Mặc định là user thường
                 };
@@ -35,12 +36,24 @@ function DangKy() {
 
                 if (response.success) {
                     NotifySuccess("Đăng ký thành công");
-                    navigate("/signin");
+                    navigate("/");
                 } else {
                     NotifyError(response.message || "Đăng ký thất bại");
                 }
             } catch (error) {
-                NotifyError(error.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại.");
+                const data = error.response?.data;
+                let message = "Đăng ký thất bại. Vui lòng thử lại.";
+
+                if (data) {
+                    const firstKey = Object.keys(data)[0];
+                    if (firstKey) {
+                        const firstError = data[firstKey][0];
+                        if (firstError) {
+                            message = firstError;
+                        }
+                    }
+                }
+                NotifyError(message); 
             }
         } else {
             NotifyWarning('Vui lòng nhập thông tin đầy đủ');
@@ -58,7 +71,7 @@ function DangKy() {
 
                     <div className="DangKy_option">
                         <div className="DangKy_option-dangKy">
-                            <span onClick={() => navigate("/signin")}>
+                            <span onClick={() => navigate("/")}>
                                 Đăng nhập
                             </span>
                         </div>

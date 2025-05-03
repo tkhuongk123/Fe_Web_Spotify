@@ -1,33 +1,60 @@
+import { useTrack } from "../../contexts/TrackProvider";
 import "./HeaderClient.css";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { SpotifyOutlined, HomeFilled, ShopFilled, ToolFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Tooltip, Input, Dropdown } from "antd";
-import { useNavigate } from "react-router-dom";
-const items = [
-    {
-      label: (
-        <a href="https://www.antgroup.com" target="_blank" rel="noopener noreferrer">
-          1st menu item
-        </a>
-      ),
-      key: '0',
-    },
-    {
-      label: (
-        <a href="https://www.aliyun.com" target="_blank" rel="noopener noreferrer">
-          2nd menu item
-        </a>
-      ),
-      key: '1',
-    },
-    {
-      label: '3rd menu item',
-      key: '2',
-    },
-];
+import { useNavigate, Link } from "react-router-dom";
+
+
 
 
 function HeaderClient() {
     const navigate = useNavigate();
+    const { user } = useTrack();
+    const [searchValue, setSearchValue] = useState('');
+
+    const items = [
+        {
+            label: (
+                <a onClick={() => navigate(`/user/${user.id}`)}>
+                    Hồ sơ
+                </a>
+            ),
+            key: '0',
+        },
+        {
+            label: (
+                <a 
+                    onClick={() => {
+                        localStorage.removeItem('user');
+                        window.location.href = "/"
+                    }}
+                >
+                    Đăng xuất
+                </a>
+              ),
+            key: '1',
+        },
+    ];
+
+    const handleSearch = () => {
+        if (searchValue.trim() !== '') {
+            navigate(`/search/${encodeURIComponent(searchValue.trim())}`);
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
+    function getIdUser()
+    {
+        const idUser = localStorage.getItem("idUser");
+        return parseInt(idUser);
+    }
 
     return (
         <div className="header-client">
@@ -40,7 +67,7 @@ function HeaderClient() {
                         <div className="icon-container">
                             <HomeFilled
                                 onClick={() => {
-                                    navigate("/");
+                                    navigate("/home");
                                 }}
                             />
                         </div>
@@ -51,8 +78,13 @@ function HeaderClient() {
                     <Input
                         className="custom-placeholder"
                         placeholder="Tìm kiếm..."
-                        
+                        value={searchValue}
+                        onChange={(e) => 
+                            setSearchValue(e.target.value)
+                        }
+                        onPressEnter={handleKeyPress}
                         prefix={<SearchOutlined 
+                                    onClick={handleSearch}
                                     style={{
                                         fontSize: '20px',
                                         marginRight: '5px'
@@ -69,11 +101,11 @@ function HeaderClient() {
             </div>
             <div className="right-container">
                 <div className="feature-btn">
-                    <button>Khám phá Premium</button>
+                    <button onClick={() => navigate(`/prenium/${1}`)}>Khám phá Premium</button>
                 </div>
                 <Dropdown menu={{ items }} trigger={['click']}>
-                    <Tooltip className="user-wrapper" placement="bottom" title={"Khuong Tran"}>
-                        <span>K</span>
+                    <Tooltip className="user-wrapper" placement="bottom" title={user.username}>
+                        <span>{user.username.charAt(0).toUpperCase()}</span>
                     </Tooltip>
                 </Dropdown>
             </div>

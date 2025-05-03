@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useRef, useEffect } from "react";
+import { Modal } from "antd";
 
 // Tạo Context
 const TrackContext = createContext();
@@ -10,8 +11,13 @@ export function TrackProvider({ children }) {
         return saved ? JSON.parse(saved) : {};
     });
     const [isPlaying, setIsPlaying] = useState(false);
+    const [user, setUser] = useState(() => {
+        const saved = localStorage.getItem("user");
+        return saved ? JSON.parse(saved) : {};
+    });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    
+
 
     useEffect(() => {
         if (trackInfo) {
@@ -21,8 +27,26 @@ export function TrackProvider({ children }) {
 
 
     return (
-        <TrackContext.Provider value={{ trackInfo ,setTrackInfo, isPlaying, setIsPlaying }}>
+        <TrackContext.Provider 
+            value={{ 
+                trackInfo ,setTrackInfo, 
+                isPlaying, setIsPlaying, 
+                user, setUser,
+                isModalOpen, setIsModalOpen
+            }}
+        >
             {children}
+            <Modal 
+                className="modal-prenium-inform"
+                open={isModalOpen} 
+                onCancel={() => setIsModalOpen(false)} 
+                width={600}
+                centered
+            >
+                <h2>Nâng cấp lên Premium ?</h2>
+                <br/>
+                <p>Nâng cấp lên Premium để nghe chọn bài hát</p>
+            </Modal>
         </TrackContext.Provider>
     );
 }

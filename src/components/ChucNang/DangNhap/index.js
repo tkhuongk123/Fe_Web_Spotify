@@ -1,7 +1,7 @@
 import validation from "../../../utils/validation";
 import { NotifyError, NotifyWarning } from "../../components/Toast";
 import "./DangNhap.css";
-import {LoginAPI} from "../../../services/TaiKhoanAPI";
+import { loginAPI } from "../../../services/UserAPI";
 import { useNavigate } from "react-router-dom";
 
 function DangNhap() {
@@ -12,24 +12,22 @@ function DangNhap() {
         const matKhauE = document.getElementById('matkhau')
         
         if(validation(tenDangNhapE) && validation(matKhauE)) {
-            const tendangnhap = tenDangNhapE.value.trim();
-            const matkhau = matKhauE.value.trim();
-            const data = await LoginAPI({tendangnhap, matkhau})
-
-            if(data.taiKhoan) {
-                sessionStorage.setItem('nguoidung', JSON.stringify(data.taiKhoan))
-                if(data.taiKhoan.idquyen === 0) {
-                    window.location.href = "/nhanvien/nhandon"
-                } else if(data.taiKhoan.idquyen === 1) {
-                    window.location.href = "/quanly/donhang"
-                } else if(data.taiKhoan.idquyen === 2) {
-                    window.location.href = "/bep/nhandon"
+            const username = tenDangNhapE.value.trim();
+            const password = matKhauE.value.trim();
+            const data = await loginAPI(username, password);
+            if(data.user) {
+                localStorage.setItem('user', JSON.stringify(data.user))
+                if(data.user.role === false) {
+                    window.location.href = "/home"
+                } else if(data.user.role === true) {
+                    window.location.href = "/admin/audio-music"
                 } else {
-                    window.location.reload()
+                    window.location.href = "/"
                 }
             } else {
                 NotifyError(data.error)
             }
+            
         } else {
             NotifyWarning('Vui lòng nhập thông tin đầy đủ')
         }

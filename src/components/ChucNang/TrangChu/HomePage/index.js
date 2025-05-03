@@ -1,64 +1,95 @@
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 import "./HomePage.css";
+import { PlayCircleFilled } from '@ant-design/icons';
+import { Tooltip, Popconfirm } from "antd";
+import GenreTracks from "./GenreTracks";
+import VideoList from "./VideoList";
 
 function HomePage() {
     const [page, setPage] = useState("HomePage");
 
+    // Mock database
+    const genres = [
+        {
+            id: 1,
+            name: 'Ballad'
+        },
+        {
+            id: 2,
+            name: 'Edm'
+        },
+        {
+            id: 3,
+            name: 'Lofi'
+        }
+    ]
+
     return (
         <div className="HomePage">
             <div className="wrap_genres">
-                <div className="genre">
-                    <div className="title">
-                        <a 
-                            href=""
-                            style={{
-                                color: 'white',
-                                fontWeight: 'bold',
-                                fontSize: '25px'
+                {
+                    genres.length !== 0 ?
+                    genres.map((item, index) => {
+                        return <div className="genre">
+                                    <div className="genre-title">
+                                        <Link 
+                                            to={`/genre/${item.id}`}
+                                            style={{
+                                                color: 'white',
+                                                fontWeight: 'bold',
+                                                fontSize: '25px'
 
-                            }}
-                        >
-                            Ballad
-                        </a>
-                        <a 
-                            href=""
-                            style={{
-                                color: '#b3b3b3',
-                                fontWeight: '500',
-                                fontSize: '14px',
-                                alignSelf: 'center',
-                                marginRight: '15px'
-                            }}
-                        >
-                            Hiện tất cả
-                        </a>
-                    </div>
-                    <div className="genre-track-list">
-                        <div className="genre-track">
-                            <div className="image">
-                                <img 
-                                    src={`${process.env.PUBLIC_URL}/default_music.png`} 
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover',
-                                        borderRadius: '5px'
-                                    }}
-                                />
-                            </div>
-                            <div className="title">
-                                <span className="main-title" style={{color: 'white'}}>
-                                    Danh sách phát của tôi #1
-                                </span>
-                                <span className="sub-title" style={{color: '#b3b3b3', fontSize: '13px'}}>
-                                    Danh sách phát
-                                    &#8226;
-                                    Khuong Tran
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                                            }}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                        <Link 
+                                            to={`/genre/${item.id}`}
+                                            style={{
+                                                color: '#b3b3b3',
+                                                fontWeight: '500',
+                                                fontSize: '14px',
+                                                alignSelf: 'center',
+                                                marginRight: '15px'
+                                            }}
+                                        >
+                                            Hiện tất cả
+                                        </Link>
+                                    </div>
+                                    <GenreTracks genreID={item.id} genreName={item.name} />
+                                </div>;
+                    }) : ''
+                }
+            </div>
+
+            <div className="wrap_videos">
+                <div className="video-title">
+                    <Link
+                        to={`/video`}
+                        style={{
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: '25px'
+
+                        }}
+                    >
+                        MV
+                    </Link>
+                    <Link 
+                        to={`/video`}
+                        style={{
+                            color: '#b3b3b3',
+                            fontWeight: '500',
+                            fontSize: '14px',
+                            alignSelf: 'center',
+                            marginRight: '15px'
+                        }}
+                    >
+                        Hiện tất cả
+                    </Link>
                 </div>
+                <VideoList />
             </div>
         </div>
     )

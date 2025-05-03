@@ -9,33 +9,34 @@
     padding: 50px 20px 20px 35px;
 }
 
-.wrap_genres .genre .title {
-    display: flex;
-    justify-content: space-between;
-    
-}
-
-.wrap_genres .genre .genre-track-list .genre-track {
-    display: flex;
-    padding: 8px 7px;
-    border-radius: 5px;
-    gap: 10px;
-    cursor: pointer;
-}
-
-.wrap_genres .genre .genre-track-list .genre-track:hover {
-    background-color: #484848;
-}
-
-.wrap_genres .genre .genre-track-list .genre-track .image {
-    position: relative;
-    width: 50px;
-    height: 50px;
-}
-
-.wrap_genres .genre .genre-track-list .genre-track .title {
+.wrap_genres .genre {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-top: 5px;
+    margin-bottom: 50px;
 }
+
+.wrap_genres .genre .genre-title {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.wrap_genres .genre .genre-title a:hover {
+    text-decoration: underline;
+}
+
+
+.wrap_videos {
+    padding: 50px 20px 20px 35px;
+}
+
+.wrap_videos .video-title {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.wrap_videos .video-title a:hover {
+    text-decoration: underline;
+}
+
