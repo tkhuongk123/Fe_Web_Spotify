@@ -6,11 +6,9 @@ import { adminRoutes, clientRoutes, publicRoutes } from "./routers";
 import { TrackProvider, useTrack } from "../src/components/Layouts/contexts/TrackProvider";
 
 function App() {
-  const user = JSON.parse(localStorage.getItem('user'));
-
-
-
   
+  const user = JSON.parse(localStorage.getItem('user') || null);
+
 
   if (!user) 
   {
@@ -49,7 +47,7 @@ function App() {
       </Router>
     )
   }
-  else if (user.role === false) {
+  else if (user.role === 0) {
     return (
       <Router>
         <div className="App">
@@ -83,7 +81,7 @@ function App() {
       </Router>
     )
   }
-  else if (user.role === true) {
+  else if (user.role === 1) {
     return (
       <Router>
         <div className="App">

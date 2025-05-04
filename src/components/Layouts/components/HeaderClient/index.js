@@ -6,13 +6,22 @@ import { SpotifyOutlined, HomeFilled, ShopFilled, ToolFilled, SearchOutlined } f
 import { Button, Tooltip, Input, Dropdown } from "antd";
 import { useNavigate, Link } from "react-router-dom";
 
-
-
-
 function HeaderClient() {
     const navigate = useNavigate();
     const { user } = useTrack();
     const [searchValue, setSearchValue] = useState('');
+
+    // Nếu không có user, chuyển hướng về trang đăng nhập
+    useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
+
+    // Nếu không có user, không render gì cả
+    if (!user) {
+        return null;
+    }
 
     const items = [
         {
@@ -101,7 +110,7 @@ function HeaderClient() {
             </div>
             <div className="right-container">
                 <div className="feature-btn">
-                    <button onClick={() => navigate(`/prenium/${1}`)}>Khám phá Premium</button>
+                    <button onClick={() => navigate(`/prenium/${user.id}`)}>Khám phá Premium</button>
                 </div>
                 <Dropdown menu={{ items }} trigger={['click']}>
                     <Tooltip className="user-wrapper" placement="bottom" title={user.username}>

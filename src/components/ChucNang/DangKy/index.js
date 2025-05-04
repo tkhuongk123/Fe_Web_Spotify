@@ -3,6 +3,7 @@ import { NotifyError, NotifyWarning, NotifySuccess } from "../../components/Toas
 import "./DangKy.css";
 import { useNavigate } from "react-router-dom";
 import { registerAPI } from "../../../services/UserAPI";
+import { createFavoriteAPI } from "../../../services/FavoriteAPI";
 
 function DangKy() {
     const navigate = useNavigate();
@@ -24,11 +25,12 @@ function DangKy() {
             }
 
             try {
+                const cleanUsername = username.replace(/\s+/g, '');
                 const userData = {
                     username,
                     password,
                     confirm_password: confirmPassword,
-                    email: `${username}@example.com`,
+                    email: `${cleanUsername}@example.com`,
                     idquyen: 0 // Mặc định là user thường
                 };
 
@@ -36,6 +38,7 @@ function DangKy() {
 
                 if (response.success) {
                     NotifySuccess("Đăng ký thành công");
+                    const dataAddFavorite = await createFavoriteAPI(response.user.id);
                     navigate("/");
                 } else {
                     NotifyError(response.message || "Đăng ký thất bại");

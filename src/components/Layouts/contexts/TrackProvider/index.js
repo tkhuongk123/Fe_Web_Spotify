@@ -4,6 +4,7 @@ import { Modal } from "antd";
 // Tạo Context
 const TrackContext = createContext();
 
+
 // Provider để bọc toàn bộ ứng dụng
 export function TrackProvider({ children }) {
     const [trackInfo, setTrackInfo] = useState(() => {
@@ -25,6 +26,12 @@ export function TrackProvider({ children }) {
         }
     }, [trackInfo]);
 
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+        }
+    }, [user]);
+
 
     return (
         <TrackContext.Provider 
@@ -40,6 +47,7 @@ export function TrackProvider({ children }) {
                 className="modal-prenium-inform"
                 open={isModalOpen} 
                 onCancel={() => setIsModalOpen(false)} 
+                onOk={() => window.location.href = `/prenium/${user.id}`}
                 width={600}
                 centered
             >

@@ -11,175 +11,49 @@ import { PlayCircleFilled, PlusCircleOutlined, CloseCircleOutlined,
 import { Input, Tooltip, Popconfirm, Table, message, Flex, Upload, Modal, Button } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
+import { NotifySuccess, NotifyError, NotifyWarning } from "../../../components/Toast";
+import { getPlaylistTracksAPI, createPlaylistTrackAPI, checkTrackInPlaylistAPI, deletePlaylistTrackAPI } from "../../../../services/PlaylistTrackAPI";
+import { getTracksAPI } from "../../../../services/TrackAPI";
+import { deletePlaylistAPI, getPlaylistByIdAPI, updatePlaylistAPI } from "../../../../services/PlaylistAPI";
 
 function PlaylistPage() {
     const navigate = useNavigate();
-    const { trackInfo, setTrackInfo, isPlaying, setIsPlaying, user, isModalOpen, setIsModalOpen} = useTrack();
     const { idPlaylist } = useParams();
+    const { trackInfo, setTrackInfo, isPlaying, setIsPlaying, user, isModalOpen, setIsModalOpen} = useTrack();
     const [imageUrl, setImageUrl] = useState();
+    const [nameImagePlaylist, setNameImagePlaylist] = useState("");
     const [editModal, setEditModal] = useState(false);
     const [playlist, setPlaylist ] = useState({});
     const [playlistSongs, setPlaylistSongs ] = useState([]);
     const [isOpenFind, setIsOpenFind] = useState(false);
+    const [tracks, setTracks ] = useState([]);
     const [findTrack, setFindTrack ] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState("");
     const [nameKeyword, setNameKeyword] = useState("");
 
     // Mock Data
-    const users = [
-        {
-            id: 1,
-            username: 'Trần Văn A',
-            image_file_path: null,
-            email: 'tranvana@gmail.com',
-            password: '123456',
-            profile_image_path: null,
-            is_premium: 0
-        },
-        {
-            id: 2,
-            username: 'Trần Văn B',
-            image_file_path: null,
-            email: 'tranvanb@gmail.com',
-            password: '123456',
-            profile_image_path: null,
-            is_premium: 0
-        },
-        {
-            id: 3,
-            username: 'Trần Văn C',
-            image_file_path: null,
-            email: 'tranvanc@gmail.com',
-            password: '123456',
-            profile_image_path: null,
-            is_premium: 0
-        },
-    ]
-
-    const playlists = [
-        {
-            id: 1,
-            name: 'Danh sách phát của tôi #1',
-            user_id: 1,
-            img_file_path: null
-        },
-        {
-            id: 2,
-            name: 'Playlist usuk này chill lắm',
-            user_id: 1,
-            img_file_path: null
-        },
-        {
-            id: 3,
-            name: 'Danh sách phát của tôi #3',
-            user_id: 1,
-            img_file_path: null
-        },
-    ]
-
-    const tracks = [
-        {
-            id: 1,
-            title: 'Dấu mưa',
-            duration: 285,
-            artist: 'Trung Quân',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'dau_mua.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 2,
-            title: 'Nước mắt em lau bằng tình yêu mới',
-            duration: 285,
-            artist: 'Dalab',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'nuoc_mat_em_lau_bang_tinh_yeu_moi.mp3', 
-            video_file_path: null,
-            is_premium: 1
-        },
-        {
-            id: 3,
-            title: 'Yêu thương ngày đó',
-            duration: 285,
-            artist: 'Soobin Hoàng Sơn',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'yeu_thuong_ngay_do.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 4,
-            title: 'Trót yêu',
-            duration: 285,
-            artist: 'Trung Quân',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'trot_yeu.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 5,
-            title: 'Mortals',
-            duration: 285,
-            artist: 'TheFatRat',
-            genre_id: 2,
-            img_file_path: null,
-            audio_file_path: 'mortal.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        }
-    ]
-
-    const listSongs = [
-        {
-            id: 1,
-            title: 'Dấu mưa',
-            duration: 285,
-            artist: 'Trung Quân',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'dau_mua.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 3,
-            title: 'Yêu thương ngày đó',
-            duration: 285,
-            artist: 'Soobin Hoàng Sơn',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'yeu_thuong_ngay_do.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-        {
-            id: 4,
-            title: 'Trót yêu',
-            duration: 285,
-            artist: 'Trung Quân',
-            genre_id: 1,
-            img_file_path: null,
-            audio_file_path: 'trot_yeu.mp3', 
-            video_file_path: null,
-            is_premium: 0
-        },
-    ];
-
-
     useEffect(() => {
-        setPlaylistSongs(listSongs);
-    }, []);
+        ( async () => {
+            const dataPlaylistTracks = await getPlaylistTracksAPI(idPlaylist);
+            const dataPlaylist = await getPlaylistByIdAPI(idPlaylist);
+            const dataTracks = await getTracksAPI();
 
-    useEffect(() => {
-        const playlist = getPlaylistById(idPlaylist);
-        setPlaylist(playlist);
+            setPlaylist(dataPlaylist.playlist);
+            setNameImagePlaylist(dataPlaylist.playlist.image_file_path);
+            setTracks(dataTracks.tracks);
+            if(dataPlaylistTracks.playlist_tracks)
+            {
+                setPlaylistSongs(dataPlaylistTracks.playlist_tracks);
+            }
+            else 
+            {
+                setPlaylistSongs([]);
+            }
+        })();
     }, [idPlaylist]);
+
+    
+
 
     useEffect(() => {
         const keyword = searchKeyword.trim().toLowerCase();
@@ -197,49 +71,67 @@ function PlaylistPage() {
         }
     }, [searchKeyword]);
 
-    function getUserNameById(user_id)
-    {
-        const user = users.find(item => item.id === user_id);
-        return user ? user.username : null;
+    useEffect(() => {
+        if (editModal && playlist.name) {
+          setNameKeyword(playlist.name);
+        }
+      }, [editModal, playlist]);
+
+
+
+    const addIntoPlaylist = async (idTrack) => {
+        const dataCreatePlaylistTrack = await createPlaylistTrackAPI(idPlaylist, idTrack);
+        if(dataCreatePlaylistTrack.success)
+        {
+            const dataPlaylistTracks = await getPlaylistTracksAPI(idPlaylist);
+            setPlaylistSongs(dataPlaylistTracks.playlist_tracks);
+            message.success('Đã thêm bài hát vào playlist thành công!');
+        }
     }
 
-    function getPlaylistById(idPlaylist)
-    {
-        return playlists.find(item => item.id == idPlaylist);
-    }
-
-
-    function addIntoPlaylist(idPlaylist, song_id)
-    {
-        const newListSongs = [...playlistSongs];
-        const track = getTrackById(song_id);
-        newListSongs.push(track);
-        setPlaylistSongs(newListSongs);
-        message.success('Đã thêm bài hát vào playlist thành công!');
-    }
-
-    function removeTrackFromPlaylist(idPlaylist, index)
-    {
-        const newListSongs = [...playlistSongs];
-        newListSongs.splice(index, 1);
-        setPlaylistSongs(newListSongs);
-        message.success('Đã xóa bài hát từ playlist!');
+    const removeTrackFromPlaylist = async (idPlaylist, idTrack) => {
+        const dataDeletePlaylistTrack = await deletePlaylistTrackAPI(idPlaylist, idTrack);
+        if(dataDeletePlaylistTrack.success)
+        {
+            const dataPlaylistTracks = await getPlaylistTracksAPI(idPlaylist);
+            setPlaylistSongs(dataPlaylistTracks.playlist_tracks);
+            message.success('Đã xóa bài hát ra khỏi playlist thành công!');
+        }
         
     }
 
-    function removePlaylist(idPlaylist, index)
-    {
-        navigate("/");
-    }
-
-    function getTrackById(song_id)
-    {
-        return tracks.find(item => item.id === song_id);
+    const handleUpdatePlaylist = async () => {
+        const dataUpdatePlaylist = await updatePlaylistAPI(idPlaylist, user.id, nameKeyword, nameImagePlaylist || null);
+        if(dataUpdatePlaylist.success)
+        {
+            const dataPlaylist = await getPlaylistByIdAPI(idPlaylist);
+            setPlaylist(dataPlaylist.playlist);
+            setEditModal(false);
+            window.location.href = `/playlist/${idPlaylist}`;
+        }
     }
 
     const isInPlaylist = (idTrack) => {
         return playlistSongs.some(song => song.id === idTrack);
     };
+
+    
+
+    
+
+    const removePlaylist = async (idPlaylist) => {
+        const dataDeletePlaylist = await deletePlaylistAPI(idPlaylist);
+        if(dataDeletePlaylist.success)
+        {
+            window.location.href = `/home`;
+        }
+        else
+        {
+            console.log(">>> error: ", dataDeletePlaylist.error);
+        }
+    }
+
+
 
 
     const formatTime = (seconds) => {
@@ -250,14 +142,8 @@ function PlaylistPage() {
 
     const handleCancel = () => {
         setEditModal(false);
-        
     };
 
-    const getBase64 = (img, callback) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
-    };
 
     const beforeUpload = (file) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -265,14 +151,9 @@ function PlaylistPage() {
             message.error('You can only upload JPG/PNG file!');
             return Upload.LIST_IGNORE;
         }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-            return Upload.LIST_IGNORE;
-        }
-        getBase64(file, (url) => {
-            setImageUrl(url);
-        });
+        const previewUrl = URL.createObjectURL(file);
+        setImageUrl(previewUrl);
+        setNameImagePlaylist(file.name);
         return false;
     };
 
@@ -285,7 +166,8 @@ function PlaylistPage() {
                     onClick={() => setEditModal(true)}
                 >
                     <img 
-                        src={`${process.env.PUBLIC_URL}/default_music.png`} 
+                        src={`${process.env.PUBLIC_URL}/assets/images/${playlist.image_file_path ? playlist.image_file_path : 'default_music.png'}`} 
+                        
                         style={{
                             width: '100%',
                             height: '100%',
@@ -304,7 +186,7 @@ function PlaylistPage() {
                         {playlist?.name || ""}
                     </span>
                     <span className="sub-info">
-                        <a className="user">{getUserNameById(playlist?.user_id || "") || ""}</a> 
+                        <a className="user">{user.username}</a> 
                         &nbsp;
                         &#8226; 
                         &nbsp;
@@ -401,7 +283,7 @@ function PlaylistPage() {
                                                 <div className="track">
                                                     <div className="image">
                                                         <img 
-                                                            src={`${process.env.PUBLIC_URL}/${item.img_file_path ? item.img_file_path : 'default_music.png'}`} 
+                                                            src={`${process.env.PUBLIC_URL}/assets/images/${item.image_file_path ? item.image_file_path : 'default_music.png'}`} 
                                                             style={{
                                                                 width: '100%',
                                                                 height: '100%',
@@ -429,7 +311,7 @@ function PlaylistPage() {
                                             <td class="remove-track-col">
                                                 <Tooltip className="remove-from-playlist" placement="top" title={"Xóa khỏi playlist"}>
                                                     <CloseCircleOutlined 
-                                                        onClick={() => removeTrackFromPlaylist(idPlaylist, index)}
+                                                        onClick={() => removeTrackFromPlaylist(idPlaylist, item.id)}
                                                     />
                                                 </Tooltip>
                                             </td>
@@ -504,7 +386,7 @@ function PlaylistPage() {
                                                             <div className="track">
                                                                 <div className="image">
                                                                     <img 
-                                                                        src={`${process.env.PUBLIC_URL}/${item.img_file_path ? item.img_file_path : 'default_music.png'}`} 
+                                                                        src={`${process.env.PUBLIC_URL}/assets/images/${item.image_file_path ? item.image_file_path : 'default_music.png'}`}  
                                                                         style={{
                                                                             width: '100%',
                                                                             height: '100%',
@@ -551,7 +433,7 @@ function PlaylistPage() {
                                                         </td>
                                                         <td class="duration-col">
                                                             {
-                                                                (!isInPlaylist(item.id) ?
+                                                                (isInPlaylist(item.id) == false ?
                                                                     <Tooltip 
                                                                         className="find-tracks-add-btn" 
                                                                         placement="top" 
@@ -566,7 +448,7 @@ function PlaylistPage() {
                                                                                 } 
                                                                                 else 
                                                                                 {
-                                                                                    addIntoPlaylist(idPlaylist, item.id)
+                                                                                    addIntoPlaylist(item.id)
                                                                                 }
                                                                             }}                                                                        
                                                                         />
@@ -611,7 +493,7 @@ function PlaylistPage() {
                     <Button 
                         key="submit" 
                         type="primary" 
-                        onClick={handleCancel}
+                        onClick={handleUpdatePlaylist}
                         style={{
                             backgroundColor: 'white',
                             color: '#000',
@@ -633,7 +515,7 @@ function PlaylistPage() {
                         showUploadList={false}
                     >
                         <img 
-                            src={imageUrl ? imageUrl : `${process.env.PUBLIC_URL}/${playlist?.img_file_path || 'default_music.png'}`}  
+                            src={imageUrl ? imageUrl : `${process.env.PUBLIC_URL}/assets/images/${playlist?.image_file_path || 'default_music.png'}`}  
                             style={{ 
                                 width: '100%',
                                 height: '100%',
@@ -644,7 +526,7 @@ function PlaylistPage() {
                     </Upload>
                     <Input
                         
-                        value={nameKeyword ? nameKeyword : playlist.name}
+                        value={nameKeyword}
                         onChange={(e) => 
                             setNameKeyword(e.target.value)
                         }
